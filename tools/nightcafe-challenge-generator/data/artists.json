@@ -1,0 +1,402 @@
+{
+  "artists": [
+    {
+      "name": "Leonardo da Vinci",
+      "aliases": ["da Vinci", "Leonardo"],
+      "era": "Renaissance",
+      "styles": ["classical", "anatomical", "detailed", "oil painting", "technical"],
+      "medium": "oil",
+      "themes": ["renaissance", "classical", "realism", "portraiture", "scientific"]
+    },
+    {
+      "name": "Vincent van Gogh",
+      "aliases": ["van Gogh", "Van Gogh"],
+      "era": "Post-Impressionist",
+      "styles": ["expressive", "bold brushstrokes", "swirling", "vibrant", "textured"],
+      "medium": "oil",
+      "themes": ["impressionism", "nature", "emotional", "vibrant", "starry"]
+    },
+    {
+      "name": "Pablo Picasso",
+      "aliases": ["Picasso"],
+      "era": "Modern",
+      "styles": ["cubist", "abstract", "geometric", "fragmented", "bold"],
+      "medium": "mixed",
+      "themes": ["cubism", "abstract", "modern", "experimental", "geometric"]
+    },
+    {
+      "name": "Claude Monet",
+      "aliases": ["Monet"],
+      "era": "Impressionist",
+      "styles": ["impressionist", "light", "color", "soft", "dreamy"],
+      "medium": "oil",
+      "themes": ["impressionism", "nature", "water", "light", "pastoral"]
+    },
+    {
+      "name": "Salvador Dalí",
+      "aliases": ["Dali"],
+      "era": "Surrealist",
+      "styles": ["surrealist", "dreamlike", "bizarre", "melting", "fantastical"],
+      "medium": "oil",
+      "themes": ["surrealism", "dream", "fantastical", "bizarre", "psychological"]
+    },
+    {
+      "name": "Rembrandt van Rijn",
+      "aliases": ["Rembrandt"],
+      "era": "Baroque",
+      "styles": ["dramatic lighting", "chiaroscuro", "expressive", "golden", "realistic"],
+      "medium": "oil",
+      "themes": ["baroque", "dramatic", "light and shadow", "portraiture", "classical"]
+    },
+    {
+      "name": "Frida Kahlo",
+      "aliases": ["Kahlo"],
+      "era": "Modern",
+      "styles": ["surreal", "symbolic", "bold colors", "autobiographical", "intimate"],
+      "medium": "oil",
+      "themes": ["surrealism", "self-portrait", "emotional", "mexican", "nature"]
+    },
+    {
+      "name": "Andy Warhol",
+      "aliases": ["Warhol"],
+      "era": "Contemporary",
+      "styles": ["pop art", "repetitive", "bright colors", "commercial", "bold"],
+      "medium": "mixed",
+      "themes": ["pop art", "contemporary", "commercial", "celebrity", "graphic"]
+    },
+    {
+      "name": "Jackson Pollock",
+      "aliases": ["Pollock"],
+      "era": "Abstract Expressionist",
+      "styles": ["abstract", "drip painting", "gestural", "dynamic", "chaotic"],
+      "medium": "acrylic",
+      "themes": ["abstract", "expressionist", "chaotic", "energetic", "action"]
+    },
+    {
+      "name": "Sandro Botticelli",
+      "aliases": ["Botticelli"],
+      "era": "Renaissance",
+      "styles": ["classical", "delicate", "mythological", "ethereal", "graceful"],
+      "medium": "tempera",
+      "themes": ["renaissance", "classical", "mythology", "graceful", "spiritual"]
+    },
+    {
+      "name": "Michelangelo",
+      "aliases": ["Michelangelo Buonarroti"],
+      "era": "Renaissance",
+      "styles": ["classical", "muscular", "anatomical", "grandiose", "detailed"],
+      "medium": "mixed",
+      "themes": ["renaissance", "classical", "sculpture", "spiritual", "anatomical"]
+    },
+    {
+      "name": "Caravaggio",
+      "aliases": ["Caravaggio Merisi"],
+      "era": "Baroque",
+      "styles": ["dramatic", "chiaroscuro", "realistic", "intense", "theatrical"],
+      "medium": "oil",
+      "themes": ["baroque", "dramatic", "religious", "dark", "intense"]
+    },
+    {
+      "name": "René Magritte",
+      "aliases": ["Magritte"],
+      "era": "Surrealist",
+      "styles": ["surrealist", "mysterious", "paradoxical", "thoughtful", "dreamlike"],
+      "medium": "oil",
+      "themes": ["surrealism", "mystery", "paradox", "philosophical", "dreamlike"]
+    },
+    {
+      "name": "Marc Chagall",
+      "aliases": ["Chagall"],
+      "era": "Modern",
+      "styles": ["surreal", "lyrical", "floating figures", "dreamlike", "vibrant"],
+      "medium": "mixed",
+      "themes": ["surrealism", "jewish", "dreamlike", "lyrical", "spiritual"]
+    },
+    {
+      "name": "Joan Miró",
+      "aliases": ["Miro"],
+      "era": "Modern",
+      "styles": ["abstract", "biomorphic", "playful", "colorful", "geometric"],
+      "medium": "mixed",
+      "themes": ["abstract", "surrealism", "playful", "colorful", "biomorphic"]
+    },
+    {
+      "name": "Harry Clarke",
+      "aliases": ["Clarke"],
+      "era": "Art Nouveau",
+      "styles": ["art nouveau", "ornate", "intricate", "detailed", "decorative"],
+      "medium": "mixed",
+      "themes": ["art nouveau", "ornate", "decorative", "intricate", "gothic"]
+    },
+    {
+      "name": "Arthur Rackham",
+      "aliases": ["Rackham"],
+      "era": "Art Nouveau",
+      "styles": ["illustration", "ornate", "fantasy", "detailed", "whimsical"],
+      "medium": "watercolor",
+      "themes": ["fantasy", "illustration", "ornate", "whimsical", "literary"]
+    },
+    {
+      "name": "Gustave Klimt",
+      "aliases": ["Klimt"],
+      "era": "Art Nouveau",
+      "styles": ["art nouveau", "ornate", "gold leaf", "decorative", "sensual"],
+      "medium": "mixed",
+      "themes": ["art nouveau", "ornate", "sensual", "decorative", "symbolist"]
+    },
+    {
+      "name": "Alphonse Mucha",
+      "aliases": ["Mucha"],
+      "era": "Art Nouveau",
+      "styles": ["art nouveau", "decorative", "posters", "flowing", "ornate"],
+      "medium": "mixed",
+      "themes": ["art nouveau", "decorative", "posters", "ornate", "flowing"]
+    },
+    {
+      "name": "Frank Frazetta",
+      "aliases": ["Frazetta"],
+      "era": "Contemporary",
+      "styles": ["fantasy art", "muscular", "dramatic", "adventure", "detailed"],
+      "medium": "oil",
+      "themes": ["fantasy", "adventure", "muscular", "dramatic", "pulp fiction"]
+    },
+    {
+      "name": "H.R. Giger",
+      "aliases": ["Giger"],
+      "era": "Contemporary",
+      "styles": ["biomechanical", "surreal", "dark", "alien", "detailed"],
+      "medium": "mixed",
+      "themes": ["biomechanical", "surreal", "dark", "sci-fi", "horror"]
+    },
+    {
+      "name": "Boris Vallejo",
+      "aliases": ["Vallejo"],
+      "era": "Contemporary",
+      "styles": ["fantasy art", "realistic", "muscular", "dramatic", "fantasy"],
+      "medium": "oil",
+      "themes": ["fantasy", "adventure", "realistic", "muscular", "dramatic"]
+    },
+    {
+      "name": "Enki Bilal",
+      "aliases": ["Bilal"],
+      "era": "Contemporary",
+      "styles": ["surreal", "sci-fi", "atmospheric", "futuristic", "detailed"],
+      "medium": "mixed",
+      "themes": ["sci-fi", "surreal", "atmospheric", "futuristic", "dystopian"]
+    },
+    {
+      "name": "Jean-Michel Basquiat",
+      "aliases": ["Basquiat"],
+      "era": "Contemporary",
+      "styles": ["neo-expressionist", "graffiti", "raw", "abstract", "expressive"],
+      "medium": "mixed",
+      "themes": ["neo-expressionism", "urban", "abstract", "expressive", "street art"]
+    },
+    {
+      "name": "Kehinde Wiley",
+      "aliases": ["Wiley"],
+      "era": "Contemporary",
+      "styles": ["realist", "portraiture", "floral", "classical", "dignified"],
+      "medium": "oil",
+      "themes": ["portraiture", "realism", "contemporary", "classical", "floral"]
+    },
+    {
+      "name": "WLOP",
+      "aliases": ["Wlop"],
+      "era": "Digital",
+      "styles": ["digital art", "anime-inspired", "detailed", "ethereal", "fantasy"],
+      "medium": "digital",
+      "themes": ["digital art", "anime", "fantasy", "ethereal", "detailed"]
+    },
+    {
+      "name": "Artgerm (Stanley Lau)",
+      "aliases": ["Artgerm", "Stanley Lau"],
+      "era": "Digital",
+      "styles": ["digital art", "anime-inspired", "character design", "detailed", "vibrant"],
+      "medium": "digital",
+      "themes": ["digital art", "character design", "anime", "vibrant", "detailed"]
+    },
+    {
+      "name": "Loish (Lois van Baarle)",
+      "aliases": ["Loish"],
+      "era": "Digital",
+      "styles": ["digital art", "illustration", "stylized", "dreamlike", "colorful"],
+      "medium": "digital",
+      "themes": ["digital art", "illustration", "dreamlike", "colorful", "stylized"]
+    },
+    {
+      "name": "Beeple (Mike Winkelmann)",
+      "aliases": ["Beeple"],
+      "era": "Digital",
+      "styles": ["3D", "digital art", "futuristic", "surreal", "experimental"],
+      "medium": "digital",
+      "themes": ["3D", "digital art", "futuristic", "surreal", "experimental"]
+    },
+    {
+      "name": "Simon Stålenhag",
+      "aliases": ["Stålenhag"],
+      "era": "Digital",
+      "styles": ["digital art", "retro-futurism", "atmospheric", "cinematic", "detailed"],
+      "medium": "digital",
+      "themes": ["retro-futurism", "atmospheric", "cinematic", "sci-fi", "nostalgia"]
+    },
+    {
+      "name": "Norman Rockwell",
+      "aliases": ["Rockwell"],
+      "era": "Mid-Century",
+      "styles": ["realism", "Americana", "nostalgic", "detailed", "warm"],
+      "medium": "oil",
+      "themes": ["americana", "realism", "nostalgic", "warm", "mid-century"]
+    },
+    {
+      "name": "Thomas Kinkade",
+      "aliases": ["Kinkade"],
+      "era": "Contemporary",
+      "styles": ["realism", "luminous", "cottage", "nostalgic", "warm"],
+      "medium": "oil",
+      "themes": ["realism", "luminous", "nostalgic", "warm", "pastoral"]
+    },
+    {
+      "name": "Mark Ryden",
+      "aliases": ["Ryden"],
+      "era": "Contemporary",
+      "styles": ["surreal", "childlike", "baroque", "grotesque", "detailed"],
+      "medium": "oil",
+      "themes": ["surreal", "gothic", "baroque", "grotesque", "dark whimsy"]
+    },
+    {
+      "name": "Ashley Wood",
+      "aliases": ["Wood"],
+      "era": "Contemporary",
+      "styles": ["digital art", "stylized", "sci-fi", "dystopian", "gritty"],
+      "medium": "digital",
+      "themes": ["sci-fi", "dystopian", "gritty", "stylized", "atmospheric"]
+    },
+    {
+      "name": "Anato Finnstark",
+      "aliases": ["Finnstark"],
+      "era": "Digital",
+      "styles": ["digital art", "fantasy", "atmospheric", "detailed", "cinematic"],
+      "medium": "digital",
+      "themes": ["fantasy", "atmospheric", "cinematic", "detailed", "epic"]
+    },
+    {
+      "name": "Greg Rutkowski",
+      "aliases": ["Rutkowski"],
+      "era": "Digital",
+      "styles": ["digital art", "fantasy", "cinematic", "detailed", "professional"],
+      "medium": "digital",
+      "themes": ["fantasy", "cinematic", "detailed", "epic", "adventure"]
+    },
+    {
+      "name": "Ismail Inceoglu",
+      "aliases": ["Inceoglu"],
+      "era": "Digital",
+      "styles": ["digital art", "fantasy", "atmospheric", "cinematic", "detailed"],
+      "medium": "digital",
+      "themes": ["fantasy", "atmospheric", "cinematic", "epic", "detailed"]
+    },
+    {
+      "name": "Max Grecke",
+      "aliases": ["Grecke"],
+      "era": "Digital",
+      "styles": ["3D rendering", "sci-fi", "futuristic", "metallic", "glossy"],
+      "medium": "3D",
+      "themes": ["sci-fi", "futuristic", "3D", "glossy", "mechanical"]
+    },
+    {
+      "name": "Ross Draws",
+      "aliases": ["Ross Tran", "Rossdraws"],
+      "era": "Digital",
+      "styles": ["digital art", "character design", "stylized", "anatomical", "expressive"],
+      "medium": "digital",
+      "themes": ["character design", "stylized", "anatomical", "expressive", "illustration"]
+    },
+    {
+      "name": "Josan Gonzalez",
+      "aliases": ["Death Burger"],
+      "era": "Digital",
+      "styles": ["digital art", "sci-fi", "atmospheric", "neon", "futuristic"],
+      "medium": "digital",
+      "themes": ["sci-fi", "neon", "cyberpunk", "atmospheric", "urban"]
+    },
+    {
+      "name": "Sparth",
+      "aliases": ["Nicolas Bouvier"],
+      "era": "Digital",
+      "styles": ["digital art", "sci-fi", "concept art", "futuristic", "detailed"],
+      "medium": "digital",
+      "themes": ["sci-fi", "concept art", "futuristic", "detailed", "industrial"]
+    },
+    {
+      "name": "Ian McQue",
+      "aliases": ["McQue"],
+      "era": "Digital",
+      "styles": ["concept art", "sci-fi", "industrial", "mechanical", "sleek"],
+      "medium": "digital",
+      "themes": ["concept art", "sci-fi", "mechanical", "industrial", "sleek"]
+    },
+    {
+      "name": "Jama Jurabaev",
+      "aliases": ["Jama"],
+      "era": "Digital",
+      "styles": ["3D rendering", "photoreal", "architectural", "detailed", "polished"],
+      "medium": "3D",
+      "themes": ["3D", "photoreal", "architectural", "detailed", "polished"]
+    },
+    {
+      "name": "Cyril Rolando",
+      "aliases": ["Aquasixio"],
+      "era": "Digital",
+      "styles": ["digital art", "character design", "vibrant", "stylized", "anime-influenced"],
+      "medium": "digital",
+      "themes": ["character design", "vibrant", "stylized", "anime", "illustration"]
+    },
+    {
+      "name": "Alphonse Elric Concept",
+      "aliases": ["Anime Concept"],
+      "era": "Digital",
+      "styles": ["anime", "mechanical", "detailed", "metallic", "stylized"],
+      "medium": "digital",
+      "themes": ["anime", "mechanical", "metallic", "stylized", "detailed"]
+    },
+    {
+      "name": "Tite Kubo",
+      "aliases": ["Kubo"],
+      "era": "Digital",
+      "styles": ["manga", "gothic", "supernatural", "dramatic", "stylized"],
+      "medium": "ink",
+      "themes": ["manga", "gothic", "supernatural", "dramatic", "stylized"]
+    },
+    {
+      "name": "Akira Toriyama",
+      "aliases": ["Toriyama"],
+      "era": "Digital",
+      "styles": ["manga", "action", "comedic", "expressive", "dynamic"],
+      "medium": "ink",
+      "themes": ["manga", "action", "comedic", "expressive", "adventure"]
+    },
+    {
+      "name": "Kentaro Miura",
+      "aliases": ["Miura"],
+      "era": "Digital",
+      "styles": ["manga", "dark fantasy", "intricate", "dramatic", "medieval"],
+      "medium": "ink",
+      "themes": ["manga", "dark fantasy", "intricate", "dramatic", "gothic"]
+    },
+    {
+      "name": "Yoshitaka Amano",
+      "aliases": ["Amano"],
+      "era": "Digital",
+      "styles": ["watercolor", "ethereal", "fantasy", "delicate", "surreal"],
+      "medium": "watercolor",
+      "themes": ["fantasy", "ethereal", "watercolor", "delicate", "surreal"]
+    }
+  ],
+  "metadata": {
+    "total": 48,
+    "source": "Stable Diffusion 1.5 Cheat Sheet",
+    "lastUpdated": "2026-07-20",
+    "note": "Curated sample of artists from comprehensive cheat sheet. Run with --resync-artists to fetch full dataset."
+  }
+}

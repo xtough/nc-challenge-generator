@@ -1,0 +1,15 @@
+node_modules/
+dist/
+*.js
+*.d.ts
+*.map
+.DS_Store
+*.log
+npm-debug.log*
+.env
+.env.local
+~/.nightcafe-gen/
+.idea/
+.vscode/
+*.swp
+*.swo

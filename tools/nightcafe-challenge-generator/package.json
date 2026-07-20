@@ -1,0 +1,39 @@
+{
+  "name": "nightcafe-challenge-generator",
+  "version": "1.0.0",
+  "description": "CLI tool to generate NightCafe Build-a-Prompt challenges with themed categories and artist suggestions",
+  "main": "dist/index.js",
+  "bin": {
+    "nightcafe-gen": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/cli.ts",
+    "test": "jest",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "nightcafe",
+    "ai-art",
+    "prompt-generator",
+    "cli"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "chalk": "^5.3.0",
+    "axios": "^1.6.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "ts-node": "^10.9.1",
+    "@types/node": "^20.8.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "@types/jest": "^29.5.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

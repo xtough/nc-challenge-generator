@@ -1,0 +1,607 @@
+{
+  "themes": [
+    {
+      "name": "Vikings",
+      "emoji": "🛶🌳🐍",
+      "mandatoryKeyword": "Norse mythology",
+      "description": "Fierce Nordic warriors, ancient Norse culture, and mythological elements",
+      "categories": {
+        "subject": [
+          "warrior",
+          "raider",
+          "explorer",
+          "shieldmaiden",
+          "berserker",
+          "viking captain"
+        ],
+        "setting": [
+          "fjord",
+          "longship",
+          "mead hall",
+          "forest",
+          "icy mountain",
+          "viking settlement"
+        ],
+        "mood": [
+          "fierce",
+          "adventurous",
+          "primal",
+          "mysterious",
+          "harsh",
+          "noble"
+        ],
+        "medium": [
+          "oil painting",
+          "concept art",
+          "digital art",
+          "watercolor",
+          "sketch"
+        ],
+        "style": [
+          "realistic",
+          "stylized",
+          "fantasy",
+          "historical",
+          "dramatic"
+        ]
+      }
+    },
+    {
+      "name": "Gothic Victorian",
+      "emoji": "🕯️🎩⚙️🌙",
+      "mandatoryKeyword": "Gothic Victorian aesthetic",
+      "description": "Dark, ornate Victorian era with gothic elements and steampunk influences",
+      "categories": {
+        "subject": [
+          "aristocrat",
+          "mysterious figure",
+          "clockmaker",
+          "phantom",
+          "gothic lady",
+          "gentleman"
+        ],
+        "setting": [
+          "manor",
+          "crypt",
+          "fog-shrouded street",
+          "clocktower",
+          "library",
+          "theater"
+        ],
+        "mood": [
+          "dark",
+          "mysterious",
+          "romantic",
+          "eerie",
+          "elegant",
+          "theatrical"
+        ],
+        "medium": [
+          "oil painting",
+          "mixed media",
+          "digital art",
+          "engraving",
+          "illustration"
+        ],
+        "style": [
+          "gothic",
+          "ornate",
+          "steampunk",
+          "dark academia",
+          "romantic"
+        ]
+      }
+    },
+    {
+      "name": "Brutalism",
+      "emoji": "🧱🏢",
+      "mandatoryKeyword": "Brutalist architecture",
+      "description": "Raw, imposing concrete structures and stark industrial aesthetics",
+      "categories": {
+        "subject": [
+          "concrete monument",
+          "industrial structure",
+          "geometric form",
+          "urban landscape",
+          "architectural detail",
+          "abstract composition"
+        ],
+        "setting": [
+          "concrete plaza",
+          "brutalist building",
+          "urban wasteland",
+          "industrial zone",
+          "underground bunker",
+          "minimalist space"
+        ],
+        "mood": [
+          "stark",
+          "imposing",
+          "austere",
+          "industrial",
+          "monumental",
+          "cold"
+        ],
+        "medium": [
+          "photography",
+          "digital art",
+          "architectural rendering",
+          "mixed media",
+          "concept art"
+        ],
+        "style": [
+          "realistic",
+          "minimalist",
+          "abstract",
+          "architectural",
+          "industrial"
+        ]
+      }
+    },
+    {
+      "name": "Weather Phenomena",
+      "emoji": "⚡🌪️☀️",
+      "mandatoryKeyword": "Dramatic weather",
+      "description": "Dynamic weather patterns and atmospheric conditions",
+      "categories": {
+        "subject": [
+          "lightning strike",
+          "tornado",
+          "storm",
+          "rainbow",
+          "aurora",
+          "weather event"
+        ],
+        "setting": [
+          "open sky",
+          "desert during storm",
+          "mountain during tempest",
+          "ocean waves",
+          "rural landscape",
+          "urban during rain"
+        ],
+        "mood": [
+          "dramatic",
+          "powerful",
+          "awe-inspiring",
+          "turbulent",
+          "electric",
+          "serene"
+        ],
+        "medium": [
+          "digital art",
+          "photograph",
+          "painting",
+          "concept art",
+          "illustration"
+        ],
+        "style": [
+          "realistic",
+          "cinematic",
+          "dramatic",
+          "abstract",
+          "ethereal"
+        ]
+      }
+    },
+    {
+      "name": "Dream Architecture",
+      "emoji": "🏢🌀",
+      "mandatoryKeyword": "Impossible architecture",
+      "description": "Surreal, impossible buildings and dreamlike spatial geometries",
+      "categories": {
+        "subject": [
+          "floating building",
+          "escher-like stairs",
+          "impossible angle",
+          "dream structure",
+          "interdimensional portal",
+          "reality-bending form"
+        ],
+        "setting": [
+          "void",
+          "floating in sky",
+          "melting landscape",
+          "interdimensional space",
+          "dream realm",
+          "abstract void"
+        ],
+        "mood": [
+          "dreamlike",
+          "surreal",
+          "mysterious",
+          "mind-bending",
+          "ethereal",
+          "otherworldly"
+        ],
+        "medium": [
+          "digital art",
+          "3D rendering",
+          "concept art",
+          "surreal photography",
+          "mixed media"
+        ],
+        "style": [
+          "surreal",
+          "abstract",
+          "psychedelic",
+          "escher-inspired",
+          "futuristic"
+        ]
+      }
+    },
+    {
+      "name": "Realism",
+      "emoji": "🎨📸",
+      "mandatoryKeyword": "Photorealistic detail",
+      "description": "Highly detailed, photorealistic artwork with precise rendering",
+      "categories": {
+        "subject": [
+          "portrait",
+          "still life",
+          "landscape",
+          "everyday object",
+          "human figure",
+          "nature study"
+        ],
+        "setting": [
+          "indoor studio",
+          "natural environment",
+          "urban setting",
+          "neutral background",
+          "home interior",
+          "outdoor scene"
+        ],
+        "mood": [
+          "calm",
+          "contemplative",
+          "serene",
+          "intimate",
+          "peaceful",
+          "observant"
+        ],
+        "medium": [
+          "oil painting",
+          "watercolor",
+          "colored pencil",
+          "digital art",
+          "photograph"
+        ],
+        "style": [
+          "photorealistic",
+          "realistic",
+          "hyperrealistic",
+          "academic",
+          "classical"
+        ]
+      }
+    },
+    {
+      "name": "Whimsical Masterpiece",
+      "emoji": "🖌️🎨",
+      "mandatoryKeyword": "Playful fantasy",
+      "description": "Lighthearted, imaginative artwork full of charm and creativity",
+      "categories": {
+        "subject": [
+          "magical creature",
+          "enchanted forest dweller",
+          "playful character",
+          "whimsical scene",
+          "fantastical being",
+          "storybook moment"
+        ],
+        "setting": [
+          "enchanted forest",
+          "magical garden",
+          "whimsical land",
+          "storybook setting",
+          "dreamlike world",
+          "fantasy realm"
+        ],
+        "mood": [
+          "playful",
+          "joyful",
+          "imaginative",
+          "charming",
+          "lighthearted",
+          "magical"
+        ],
+        "medium": [
+          "watercolor",
+          "digital art",
+          "illustration",
+          "acrylic",
+          "mixed media"
+        ],
+        "style": [
+          "whimsical",
+          "fantasy",
+          "illustration",
+          "storybook",
+          "stylized"
+        ]
+      }
+    },
+    {
+      "name": "Spring",
+      "emoji": "🌱🌸🐣",
+      "mandatoryKeyword": "Springtime renewal",
+      "description": "Growth, renewal, and the awakening of nature",
+      "categories": {
+        "subject": [
+          "blooming flowers",
+          "baby animal",
+          "sprouting plant",
+          "awakening",
+          "renewal scene",
+          "vibrant garden"
+        ],
+        "setting": [
+          "flower garden",
+          "spring forest",
+          "meadow",
+          "blooming orchard",
+          "park",
+          "nature reserve"
+        ],
+        "mood": [
+          "hopeful",
+          "fresh",
+          "vibrant",
+          "joyful",
+          "peaceful",
+          "alive"
+        ],
+        "medium": [
+          "watercolor",
+          "oil painting",
+          "digital art",
+          "photograph",
+          "illustration"
+        ],
+        "style": [
+          "realistic",
+          "impressionist",
+          "delicate",
+          "vibrant",
+          "ethereal"
+        ]
+      }
+    },
+    {
+      "name": "Cyberpunk",
+      "emoji": "🤖💾",
+      "mandatoryKeyword": "High-tech neon dystopia",
+      "description": "Futuristic, tech-dominated societies with neon aesthetics",
+      "categories": {
+        "subject": [
+          "cybernetic being",
+          "hacker",
+          "android",
+          "tech addict",
+          "futuristic soldier",
+          "cyborg"
+        ],
+        "setting": [
+          "neon-lit street",
+          "megacity",
+          "cybernetic lab",
+          "digital realm",
+          "dystopian future",
+          "high-tech metropolis"
+        ],
+        "mood": [
+          "futuristic",
+          "edgy",
+          "mysterious",
+          "dangerous",
+          "energetic",
+          "gritty"
+        ],
+        "medium": [
+          "digital art",
+          "3D rendering",
+          "concept art",
+          "photography",
+          "mixed media"
+        ],
+        "style": [
+          "cyberpunk",
+          "neon",
+          "futuristic",
+          "sci-fi",
+          "dystopian"
+        ]
+      }
+    },
+    {
+      "name": "Medieval Fantasy",
+      "emoji": "🗡️🐉",
+      "mandatoryKeyword": "Enchanted medieval world",
+      "description": "Knights, dragons, castles, and magical medieval adventure",
+      "categories": {
+        "subject": [
+          "knight",
+          "dragon",
+          "wizard",
+          "dragon slayer",
+          "noble warrior",
+          "sorceress"
+        ],
+        "setting": [
+          "castle",
+          "dragon's lair",
+          "enchanted forest",
+          "mystical mountain",
+          "medieval kingdom",
+          "tavern"
+        ],
+        "mood": [
+          "epic",
+          "adventurous",
+          "noble",
+          "mysterious",
+          "dangerous",
+          "heroic"
+        ],
+        "medium": [
+          "oil painting",
+          "digital art",
+          "concept art",
+          "illustration",
+          "watercolor"
+        ],
+        "style": [
+          "fantasy",
+          "realistic",
+          "epic",
+          "medieval",
+          "dramatic"
+        ]
+      }
+    },
+    {
+      "name": "Underwater",
+      "emoji": "🐚🌊",
+      "mandatoryKeyword": "Aquatic wonder",
+      "description": "Deep ocean mysteries, sea creatures, and underwater exploration",
+      "categories": {
+        "subject": [
+          "sea creature",
+          "mermaid",
+          "sea monster",
+          "sunken structure",
+          "marine life",
+          "underwater explorer"
+        ],
+        "setting": [
+          "ocean depths",
+          "coral reef",
+          "sunken city",
+          "bioluminescent trench",
+          "kelp forest",
+          "underwater cavern"
+        ],
+        "mood": [
+          "mysterious",
+          "serene",
+          "alien",
+          "ethereal",
+          "dangerous",
+          "peaceful"
+        ],
+        "medium": [
+          "digital art",
+          "watercolor",
+          "oil painting",
+          "mixed media",
+          "concept art"
+        ],
+        "style": [
+          "ethereal",
+          "realistic",
+          "surreal",
+          "fantasy",
+          "cinematic"
+        ]
+      }
+    },
+    {
+      "name": "Portal/Interdimensional",
+      "emoji": "🌌✨",
+      "mandatoryKeyword": "Dimensional gateway",
+      "description": "Portals between worlds, cosmic connections, and interdimensional travel",
+      "categories": {
+        "subject": [
+          "glowing portal",
+          "dimensional rift",
+          "cosmic gateway",
+          "reality tear",
+          "quantum anomaly",
+          "interdimensional threshold"
+        ],
+        "setting": [
+          "void between worlds",
+          "cosmic void",
+          "interdimensional space",
+          "reality junction",
+          "cosmic landscape",
+          "between dimensions"
+        ],
+        "mood": [
+          "cosmic",
+          "mysterious",
+          "awe-inspiring",
+          "otherworldly",
+          "ethereal",
+          "profound"
+        ],
+        "medium": [
+          "digital art",
+          "3D rendering",
+          "concept art",
+          "mixed media",
+          "photography"
+        ],
+        "style": [
+          "surreal",
+          "sci-fi",
+          "abstract",
+          "cosmic",
+          "ethereal"
+        ]
+      }
+    },
+    {
+      "name": "Portraits",
+      "emoji": "👤🎭",
+      "mandatoryKeyword": "Character study",
+      "description": "Expressive character portraits with emphasis on emotion and personality",
+      "categories": {
+        "subject": [
+          "noble character",
+          "mysterious stranger",
+          "wise elder",
+          "fierce warrior",
+          "mystic",
+          "emotional figure"
+        ],
+        "setting": [
+          "studio background",
+          "neutral void",
+          "subtle background",
+          "dramatic lighting",
+          "minimalist setting",
+          "environmental context"
+        ],
+        "mood": [
+          "expressive",
+          "thoughtful",
+          "intense",
+          "melancholic",
+          "confident",
+          "mysterious"
+        ],
+        "medium": [
+          "oil painting",
+          "digital art",
+          "watercolor",
+          "acrylic",
+          "charcoal"
+        ],
+        "style": [
+          "realistic",
+          "expressive",
+          "stylized",
+          "dramatic",
+          "classical"
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "total": 12,
+    "source": "NightCafe Challenge Generator",
+    "lastUpdated": "2026-07-20"
+  }
+}
