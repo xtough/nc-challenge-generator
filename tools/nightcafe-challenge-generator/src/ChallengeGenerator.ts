@@ -37,7 +37,7 @@ export class ChallengeGenerator {
     const categories: Record<string, string[]> = {};
 
     for (const [categoryName, categoryItems] of Object.entries(theme.categories)) {
-      const count = categoryOverrides[categoryName] || itemsPerCategory;
+      const count = categoryOverrides[categoryName] !== undefined ? categoryOverrides[categoryName] : itemsPerCategory;
       categories[categoryName] = this.selectRandomItems(categoryItems, count);
     }
 

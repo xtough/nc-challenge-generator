@@ -69,8 +69,9 @@ export class OutputFormatterFactory {
       case 'json':
         return new JsonFormatter();
       case 'pretty-print':
-      default:
         return new PrettyPrintFormatter();
+      default:
+        throw new Error(`Unknown output format: ${format}. Valid formats: pretty-print, markdown, json`);
     }
   }
 }

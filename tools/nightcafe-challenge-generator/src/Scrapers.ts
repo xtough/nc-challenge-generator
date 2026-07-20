@@ -5,68 +5,77 @@ import { ArtistsData, Artist } from './types';
 
 export class CheatSheetScraper {
   private readonly cheatSheetUrl = 'https://supagruen.github.io/StableDiffusion-CheatSheet/';
+  private readonly cheatSheetDataUrl = 'https://supagruen.github.io/StableDiffusion-CheatSheet/src/data.js';
 
   /**
    * Fetch and parse artists from cheat sheet
    */
   async scrapeArtists(): Promise<Artist[]> {
     try {
-      console.log('Fetching Stable Diffusion Cheat Sheet...');
-      const response = await axios.get(this.cheatSheetUrl, {
-        timeout: 10000,
+      console.log('Fetching Stable Diffusion Cheat Sheet data...');
+      const response = await axios.get(this.cheatSheetDataUrl, {
+        timeout: 15000,
       });
 
-      const html = response.data;
-      return this.parseArtistsFromHtml(html);
+      return this.parseArtistsFromDataJs(response.data);
     } catch (error) {
       throw new Error(`Failed to fetch cheat sheet: ${error}`);
     }
   }
 
   /**
-   * Parse HTML to extract artist names
-   * This is a simplified parser - in production, use a proper HTML parser
+   * Parse the data.js JavaScript array to extract artist records.
+   * The file assigns a JSON array to `var data = [...]` using JS string escaping.
    */
-  private parseArtistsFromHtml(html: string): Artist[] {
-    const artists: Artist[] = [];
-
-    // Match ### ARTIST_NAME †? patterns
-    const artistRegex = /###\s+([A-Z\s,\-().'"]+?)(\s+†)?\n/g;
-    let match;
-
-    while ((match = artistRegex.exec(html)) !== null) {
-      const name = match[1].trim();
-
-      if (name && name.length > 0) {
-        const artist: Artist = {
-          name,
-          styles: ['digital art'], // Default style - could be enhanced
-          themes: [],
-        };
-
-        artists.push(artist);
-      }
+  private parseArtistsFromDataJs(js: string): Artist[] {
+    // Extract the JSON array from `var data = [...]`
+    const match = js.match(/var\s+data\s*=\s*(\[[\s\S]*?\]);/);
+    if (!match) {
+      throw new Error('Could not find data array in cheat sheet data.js');
     }
 
-    return artists;
+    // The file uses JS string escaping (e.g. \') not valid in JSON - sanitize first
+    const sanitized = match[1].replace(/\\'/g, "'");
+
+    const records: Array<{
+      Name: string;
+      Category: string;
+      Born?: string;
+      Death?: string;
+    }> = JSON.parse(sanitized);
+
+    return records
+      .filter((r) => r.Name && r.Name.trim().length > 0)
+      .map((r) => {
+        const categories = (r.Category || '')
+          .split(',')
+          .map((c: string) => c.trim().toLowerCase())
+          .filter((c: string) => c.length > 0);
+
+        const era = r.Born ? `b.${r.Born}` : undefined;
+
+        return {
+          name: r.Name.trim(),
+          styles: categories,
+          themes: [],
+          ...(era ? { era } : {}),
+        };
+      });
   }
 
   /**
-   * Merge fetched artists with existing data
+   * Merge fetched artists with existing data, deduplicating by name (case-insensitive).
+   * Existing styles and themes are always preserved; fetched data only adds new artists.
    */
   mergeArtists(existing: Artist[], fetched: Artist[]): Artist[] {
     const existingMap = new Map(existing.map((a) => [a.name.toLowerCase(), a]));
 
-    // Add/update with fetched artists
     for (const artist of fetched) {
       const key = artist.name.toLowerCase();
-      if (existingMap.has(key)) {
-        // Preserve existing data, update if fetched has more info
-        const existing = existingMap.get(key)!;
-        artist.styles = existing.styles || artist.styles;
-        artist.themes = existing.themes || artist.themes;
+      if (!existingMap.has(key)) {
+        // Only add truly new artists; never overwrite existing curated data
+        existingMap.set(key, artist);
       }
-      existingMap.set(key, artist);
     }
 
     return Array.from(existingMap.values());

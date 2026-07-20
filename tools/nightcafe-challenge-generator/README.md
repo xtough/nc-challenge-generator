@@ -27,17 +27,34 @@ A CLI tool to generate NightCafe "Build-a-Prompt" challenges with themed categor
 ## Installation
 
 ### Prerequisites
-- Node.js 18+ 
-- npm or yarn
+- Node.js 18+ (verify with `node --version`)
+- npm (verify with `npm --version`)
 
 ### From Source
 
 ```bash
-git clone <repo>
+# 1. Navigate to the tool directory
 cd tools/nightcafe-challenge-generator
+
+# 2. Install dependencies
 npm install
+
+# 3. Build the TypeScript source
 npm run build
-npm link  # Install globally (optional)
+
+# 4. (Optional) Install globally so `nightcafe-gen` is available anywhere
+npm link
+```
+
+After `npm link`, verify with:
+```bash
+nightcafe-gen --version   # should print 1.0.0
+nightcafe-gen --help
+```
+
+Without a global install, prefix every command with `npm run dev --`:
+```bash
+npm run dev -- generate --theme Vikings
 ```
 
 ## Quick Start
@@ -204,45 +221,98 @@ tools/nightcafe-challenge-generator/
 
 ## Adding Custom Themes
 
-Edit `data/themes.json` to add new themes:
+Open `data/themes.json` and add an entry to the `"themes"` array. All five categories are required. The generator picks N random items from each pool (default: 5), so provide at least 6–10 items per category to ensure variety.
 
 ```json
 {
-  "name": "Cyberpunk",
-  "emoji": "🤖💾",
-  "mandatoryKeyword": "High-tech neon dystopia",
-  "description": "Futuristic tech-dominated societies",
+  "name": "Noir City",
+  "emoji": "🌙🕵️",
+  "mandatoryKeyword": "noir atmosphere",
+  "description": "Rain-soaked 1940s urban crime drama with chiaroscuro lighting",
   "categories": {
-    "subject": [...],
-    "setting": [...],
-    "mood": [...],
-    "medium": [...],
-    "style": [...]
+    "subject": [
+      "detective", "femme fatale", "hitman", "corrupt cop",
+      "street kid", "club singer", "crime boss", "witness"
+    ],
+    "setting": [
+      "rain-slicked alley", "smoky jazz club", "diner at midnight",
+      "rooftop water tower", "police interrogation room",
+      "foggy docks", "penthouse balcony"
+    ],
+    "mood": [
+      "brooding", "desperate", "cynical", "tense",
+      "melancholic", "suspicious", "fatalistic"
+    ],
+    "medium": [
+      "oil painting", "charcoal", "photography",
+      "digital art", "linocut", "ink wash"
+    ],
+    "style": [
+      "noir", "chiaroscuro", "expressionist", "cinematic",
+      "black and white", "dramatic lighting"
+    ]
   }
 }
 ```
 
+The theme is immediately available without rebuilding:
+```bash
+npm run dev -- generate --theme "Noir City"
+npm run dev -- themes   # verify it appears in the list
+```
+
 ## Output Examples
 
-### Pretty-Print
+### Pretty-Print (default)
 
 ```
-============================================================
+════════════════════════════════════════════════════════════
 🏗️  BUILD A PROMPT 🏗️  Vikings 🛶🌳🐍
-============================================================
+════════════════════════════════════════════════════════════
 
 📌 Mandatory Keyword: Norse mythology
 
 ✨ Pick 1 item from each category below:
 
 📍 SUBJECT:
-   1. warrior
-   2. raider
-   3. explorer
-   ...
+   1. berserker
+   2. explorer
+   3. raider
+   4. viking captain
+   5. warrior
+
+📍 SETTING:
+   1. fjord
+   2. forest
+   3. icy mountain
+   4. mead hall
+   5. viking settlement
+
+📍 MOOD:
+   1. adventurous
+   2. fierce
+   3. harsh
+   4. mysterious
+   5. primal
+
+📍 MEDIUM:
+   1. concept art
+   2. digital art
+   3. oil painting
+   4. sketch
+   5. watercolor
+
+📍 STYLE:
+   1. dramatic
+   2. fantasy
+   3. historical
+   4. realistic
+   5. stylized
+
+════════════════════════════════════════════════════════════
 ```
 
-### Markdown
+### Markdown (`--format markdown`)
 
 ```markdown
 # 🏗️ BUILD A PROMPT 🏗️ Vikings 🛶🌳🐍
@@ -250,12 +320,44 @@ Edit `data/themes.json` to add new themes:
 **Mandatory Keyword:** Norse mythology
 
 ## Instructions
-Pick **1 item** from each category below...
+Pick **1 item** from each category below to build your prompt.
 
 ### Subject
-- warrior
-- raider
+- berserker
 - explorer
+- raider
+- viking captain
+- warrior
+
+### Setting
+- fjord
+- forest
+- icy mountain
+- mead hall
+- viking settlement
+
+---
+*Generated on 7/20/2026, 10:07:25 AM*
+```
+
+### JSON (`--format json`)
+
+```json
+{
+  "id": "abc123",
+  "theme": "Vikings",
+  "emoji": "🛶🌳🐍",
+  "mandatoryKeyword": "Norse mythology",
+  "categories": {
+    "subject": ["berserker", "explorer", "raider", "viking captain", "warrior"],
+    "setting": ["fjord", "forest", "icy mountain", "mead hall", "viking settlement"],
+    "mood": ["adventurous", "fierce", "harsh", "mysterious", "primal"],
+    "medium": ["concept art", "digital art", "oil painting", "sketch", "watercolor"],
+    "style": ["dramatic", "fantasy", "historical", "realistic", "stylized"]
+  },
+  "generatedAt": "2026-07-20T10:07:25.000Z",
+  "signature": "Vikings|medium:concept art,..."
+}
 ```
 
 ## Troubleshooting

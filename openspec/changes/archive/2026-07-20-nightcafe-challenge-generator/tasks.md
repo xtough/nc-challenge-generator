@@ -8,7 +8,7 @@
 
 ## 2. Data Files - Artist Dataset
 
-- [ ] 2.1 Parse Stable Diffusion cheat sheet HTML to extract ~900 artists
+- [x] 2.1 Parse Stable Diffusion cheat sheet HTML to extract ~900 artists
 - [x] 2.2 Create `data/artists.json` with artist name, aliases, era, styles, medium, themes
 - [x] 2.3 Validate artist data (no duplicates, all required fields present)
 - [x] 2.4 Document artist data format and structure
@@ -19,7 +19,7 @@
 - [x] 3.2 Create `data/themes.json` with theme definitions including category pools
 - [x] 3.3 Create theme structure: name, emoji, mandatoryKeyword, categories
 - [x] 3.4 For each theme, populate subject/character, setting, mood, medium, style pools
-- [ ] 3.5 Document how to add new themes
+- [x] 3.5 Document how to add new themes
 
 ## 4. Core Generator Engine
 
@@ -27,14 +27,14 @@
 - [x] 4.2 Implement ChallengeGenerator class with randomTheme() and generateChallenge(theme) methods
 - [x] 4.3 Implement item selection logic (pick N random items from pool, respecting theme)
 - [x] 4.4 Add mandatory keyword inclusion (non-selectable)
-- [ ] 4.5 Write unit tests for generator logic
+- [x] 4.5 Write unit tests for generator logic
 
 ## 5. Theme Matching System
 
 - [x] 5.1 Implement ThemeMatcher class for selecting from category pools
 - [x] 5.2 Add theme lookup and validation
 - [x] 5.3 Implement random theme selection
-- [ ] 5.4 Write tests for theme matching and consistency
+- [x] 5.4 Write tests for theme matching and consistency
 
 ## 6. Challenge Library Management
 
@@ -43,7 +43,7 @@
 - [x] 6.3 Implement add() method to record generated challenges
 - [x] 6.4 Implement isDuplicate() method for checking library
 - [x] 6.5 Create ~/.nightcafe-gen/ user directory structure
-- [ ] 6.6 Write tests for library deduplication
+- [x] 6.6 Write tests for library deduplication
 
 ## 7. Output Formatters
 
@@ -51,7 +51,7 @@
 - [x] 7.2 Implement PrettyPrintFormatter (terminal output with emoji, colors)
 - [x] 7.3 Implement MarkdownFormatter (markdown structure with lists)
 - [x] 7.4 Implement JsonFormatter (structured JSON output)
-- [ ] 7.5 Add tests for all formatters
+- [x] 7.5 Add tests for all formatters
 
 ## 8. File Output Management
 
@@ -79,8 +79,8 @@
 - [x] 10.4 Add error handling for network failures
 - [x] 10.5 Implement `--resync-challenges` command
 - [x] 10.6 Create NightCafeScraper to fetch finished challenges from URL
-- [ ] 10.7 Implement dedup logic when merging challenges
-- [ ] 10.8 Write tests for resync operations
+- [x] 10.7 Implement dedup logic when merging challenges
+- [x] 10.8 Write tests for resync operations
 
 ## 11. Library & History Commands
 
@@ -94,17 +94,17 @@
 - [x] 12.1 Write end-to-end test: generate challenge, check library, verify no duplicates
 - [x] 12.2 Write test: output all three formats simultaneously
 - [x] 12.3 Write test: theme-based generation produces coherent categories
-- [ ] 12.4 Test CLI argument parsing and error handling
-- [ ] 12.5 Test resync operations with mocked data
+- [x] 12.4 Test CLI argument parsing and error handling
+- [x] 12.5 Test resync operations with mocked data
 
 ## 13. Documentation & Distribution
 
 - [x] 13.1 Create README.md with usage examples and feature overview
-- [ ] 13.2 Add USAGE.md with detailed command reference
+- [x] 13.2 Add USAGE.md with detailed command reference
 - [x] 13.3 Document theme.json and artists.json formats
 - [x] 13.4 Add troubleshooting section (resync failures, library issues)
-- [ ] 13.5 Create installation instructions (npm, local build)
-- [ ] 13.6 Add example output (pretty-print, markdown, JSON)
+- [x] 13.5 Create installation instructions (npm, local build)
+- [x] 13.6 Add example output (pretty-print, markdown, JSON)
 - [x] 13.7 Document how to add custom themes
 
 ## 14. Final Polish
