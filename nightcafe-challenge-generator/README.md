@@ -34,7 +34,7 @@ A CLI tool to generate NightCafe "Build-a-Prompt" challenges with themed categor
 
 ```bash
 # 1. Navigate to the tool directory
-cd tools/nightcafe-challenge-generator
+cd nightcafe-challenge-generator
 
 # 2. Install dependencies
 npm install
@@ -214,7 +214,7 @@ Run `nightcafe-gen sync-history` periodically to keep the NightCafe history fres
 ## Project Structure
 
 ```
-tools/nightcafe-challenge-generator/
+nightcafe-challenge-generator/
 ├── src/
 │   ├── types.ts              # TypeScript interfaces
 │   ├── ChallengeGenerator.ts  # Main generator logic

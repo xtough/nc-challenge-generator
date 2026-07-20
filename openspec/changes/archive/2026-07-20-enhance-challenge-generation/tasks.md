@@ -7,7 +7,7 @@
 ## 2. Type Definitions
 
 - [x] 2.1 Review Challenge interface in src/types.ts and confirm it supports 6 categories (artist is already supported as dynamic category)
-- [ ] 2.2 Document that artist category is now required in every challenge
+- [x] 2.2 Document that artist category is now required in every challenge
 
 ## 3. Artist Selection Logic
 
@@ -19,7 +19,7 @@
 ## 4. Category Handling
 
 - [x] 4.1 Ensure ThemeMatcher properly handles artist category (should be treated like other categories)
-- [ ] 4.2 Verify artist is included in challenge.categories object alongside subject, setting, mood, medium, style
+- [x] 4.2 Verify artist is included in challenge.categories object alongside subject, setting, mood, medium, style
 
 ## 5. Output Formatting
 
@@ -69,5 +69,5 @@
 ## 11. Finalization
 
 - [x] 11.1 Update CHANGELOG.md with changes (artist category, style refactoring, output format alignment)
-- [ ] 11.2 Commit all changes with descriptive message
-- [ ] 11.3 Push to origin and verify CI/CD passes
+- [x] 11.2 Commit all changes with descriptive message
+- [x] 11.3 Push to origin and verify CI/CD passes

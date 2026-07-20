@@ -261,6 +261,23 @@ describe('ChallengeGenerator - additional (task 4.5)', () => {
     expect(() => new Date(challenge.generatedAt)).not.toThrow();
     expect(new Date(challenge.generatedAt).getTime()).toBeGreaterThan(0);
   });
+
+  test('artist category is always present with exactly 1 artist', () => {
+    // Test random challenge
+    const randomChallenge = generator.generateRandomChallenge();
+    expect(randomChallenge.categories['artist']).toBeDefined();
+    expect(Array.isArray(randomChallenge.categories['artist'])).toBe(true);
+    expect(randomChallenge.categories['artist'].length).toBe(1);
+    expect(typeof randomChallenge.categories['artist'][0]).toBe('string');
+
+    // Test challenges for each theme
+    const themes = generator.getThemeNames();
+    themes.forEach(themeName => {
+      const challenge = generator.generateChallengeForTheme(themeName);
+      expect(challenge.categories['artist']).toBeDefined();
+      expect(challenge.categories['artist'].length).toBe(1);
+    });
+  });
 });
 
 describe('ChallengeLibraryManager - deduplication (task 6.6)', () => {

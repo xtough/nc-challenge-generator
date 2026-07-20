@@ -26,6 +26,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: 'nightcafe-challenge-generator/package-lock.json'
     - run: npm ci
+      working-directory: nightcafe-challenge-generator
     - run: npm run build --if-present
+      working-directory: nightcafe-challenge-generator
     - run: npm test
+      working-directory: nightcafe-challenge-generator

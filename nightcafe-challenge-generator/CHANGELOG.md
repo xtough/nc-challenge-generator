@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+#### Project Structure Refactoring
+- **Directory Relocation**: Project moved from `tools/nightcafe-challenge-generator/` to workspace root level (`nightcafe-challenge-generator/`)
+  - Reduces path complexity and clarifies project structure
+  - All internal structure (src/, data/, __tests__/) and functionality remain unchanged
+  - No breaking changes to CLI or APIs
+
 ### Added
 
 #### Artist Category Enhancement
