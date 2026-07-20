@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
-import { ArtistsData, Artist } from './types';
+import { ArtistsData, Artist, NightCafeHistoryEntry } from './types';
 
 export class CheatSheetScraper {
   private readonly cheatSheetUrl = 'https://supagruen.github.io/StableDiffusion-CheatSheet/';
@@ -129,37 +129,110 @@ export class CheatSheetScraper {
 
 export class NightCafeScraper {
   private readonly challengesUrl =
-    'https://creator.nightcafe.studio/search/challenges?sort=challenges%2Fsort%2FstartsAtMs%3Adesc&stillJoinable=false&status=finished';
+    'https://creator.nightcafe.studio/search/challenges?sort=challenges%2Fsort%2FstartsAtMs%3Adesc&stillJoinable=false&status=finished&chatRoomName=C3xF%27s+Build+a+Prompt+Challenge%2CBuild+a+Prompt+Challenge%2CC3xF%27s%2C+%22Portraits+Build+a+Prompt%22+Challenge+';
 
   /**
-   * Fetch finished challenges from NightCafe
-   * Note: This is limited by API availability
+   * Fetch finished Build-a-Prompt challenges from NightCafe.
+   * Parses challenge titles from the __NEXT_DATA__ JSON blob embedded in the page HTML.
+   *
+   * NOTE: NightCafe uses Cloudflare bot protection. If this returns a 403, the user
+   * may need to provide a session cookie via the NIGHTCAFE_COOKIE environment variable.
    */
-  async scrapeChallenges(): Promise<any[]> {
-    try {
-      console.log('Fetching NightCafe challenges...');
-      const response = await axios.get(this.challengesUrl, {
-        timeout: 10000,
-        headers: {
-          'User-Agent': 'NightCafe-Challenge-Generator/1.0',
-        },
-      });
+  async scrapeChallenges(): Promise<NightCafeHistoryEntry[]> {
+    const headers: Record<string, string> = {
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Accept-Language': 'en-US,en;q=0.9',
+    };
 
-      return this.parseChallengesFromHtml(response.data);
-    } catch (error) {
+    // Allow the user to pass a session cookie to bypass Cloudflare bot protection
+    const cookie = process.env.NIGHTCAFE_COOKIE;
+    if (cookie) {
+      headers['Cookie'] = cookie;
+    }
+
+    let html: string;
+    try {
+      console.log('Fetching NightCafe challenge history...');
+      const response = await axios.get(this.challengesUrl, {
+        timeout: 15000,
+        headers,
+      });
+      html = response.data;
+    } catch (error: any) {
+      const status = error?.response?.status;
+      if (status === 403) {
+        throw new Error(
+          'NightCafe returned 403 Forbidden (Cloudflare bot protection).\n' +
+            'To bypass, set the NIGHTCAFE_COOKIE environment variable to your browser session cookie:\n' +
+            '  $env:NIGHTCAFE_COOKIE="<paste cookie value from browser DevTools>"\n' +
+            '  nightcafe-gen sync-history'
+        );
+      }
       throw new Error(`Failed to fetch NightCafe challenges: ${error}`);
     }
+
+    return this.parseChallengesFromNextData(html);
   }
 
   /**
-   * Parse HTML to extract challenge information
+   * Extract challenge entries from the __NEXT_DATA__ JSON blob embedded in the page HTML.
+   * Next.js embeds server-side props in <script id="__NEXT_DATA__">...</script>.
    */
-  private parseChallengesFromHtml(html: string): any[] {
-    // This is a placeholder - actual parsing would depend on NightCafe's HTML structure
-    // In production, might use Puppeteer or Playwright for dynamic content
-    console.warn(
-      'Note: Challenge scraping requires HTML parsing. Consider using Puppeteer for dynamic content.'
-    );
-    return [];
+  parseChallengesFromNextData(html: string): NightCafeHistoryEntry[] {
+    const match = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
+    if (!match) {
+      throw new Error(
+        'Could not find __NEXT_DATA__ in NightCafe page response. ' +
+          'The page structure may have changed — please open an issue.'
+      );
+    }
+
+    let nextData: any;
+    try {
+      nextData = JSON.parse(match[1]);
+    } catch {
+      throw new Error('Failed to parse __NEXT_DATA__ JSON from NightCafe page.');
+    }
+
+    // Navigate: props.pageProps.initialState.entities.challenges (or similar path)
+    // We search recursively for an array of objects that each have a "title" string field
+    const challenges = this.findChallengeArray(nextData);
+    if (!challenges) {
+      throw new Error(
+        'Could not locate challenge list in __NEXT_DATA__. ' +
+          'The page structure may have changed.'
+      );
+    }
+
+    const fetchedAt = new Date().toISOString();
+    return challenges
+      .filter((c: any) => typeof c.title === 'string' && c.title.trim().length > 0)
+      .map((c: any) => ({ title: c.title.trim(), fetchedAt }));
+  }
+
+  /**
+   * Recursively search for the first array whose items look like challenge objects
+   * (have a string "title" field). Handles varying __NEXT_DATA__ shapes across
+   * Next.js versions and app updates.
+   */
+  private findChallengeArray(obj: any, depth = 0): any[] | null {
+    if (depth > 10 || obj === null || typeof obj !== 'object') return null;
+
+    if (Array.isArray(obj)) {
+      if (obj.length > 0 && typeof obj[0]?.title === 'string') return obj;
+      for (const item of obj) {
+        const found = this.findChallengeArray(item, depth + 1);
+        if (found) return found;
+      }
+      return null;
+    }
+
+    for (const key of Object.keys(obj)) {
+      const found = this.findChallengeArray(obj[key], depth + 1);
+      if (found) return found;
+    }
+    return null;
   }
 }

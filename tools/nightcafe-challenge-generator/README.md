@@ -149,12 +149,30 @@ nightcafe-gen clear --confirm
 nightcafe-gen resync-artists
 ```
 
-## Update Challenge Library from NightCafe
+## Sync NightCafe Challenge History
+
+The generator deduplicates against past NightCafe challenges in addition to your locally-generated log. Populate the local history cache with:
 
 ```bash
-# Sync finished challenges (if scraping is available)
-nightcafe-gen resync-challenges
+nightcafe-gen sync-history
 ```
+
+This fetches past Build-a-Prompt challenges from NightCafe and caches them in `~/.nightcafe-gen/nightcafe-history.json`.
+
+> **Note:** NightCafe uses Cloudflare bot protection. If `sync-history` returns a 403 error, set your browser session cookie:
+> ```powershell
+> $env:NIGHTCAFE_COOKIE = "<paste cookie from browser DevTools → Network tab>"
+> nightcafe-gen sync-history
+> ```
+
+### Two-Layer Deduplication
+
+When you generate a challenge, the tool checks two sources before flagging a duplicate:
+
+1. **NightCafe history cache** (`nightcafe-history.json`) — past challenges that have actually run on NightCafe, matched by theme name substring.
+2. **Local audit log** (`challenges-library.json`) — every challenge you've generated locally, matched by exact category signature.
+
+Run `nightcafe-gen sync-history` periodically to keep the NightCafe history fresh.
 
 ## Project Structure
 

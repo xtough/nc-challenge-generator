@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
 import { Challenge, ChallengeLibrary } from './types';
+import { NightCafeHistoryManager } from './NightCafeHistoryManager';
 
 export class ChallengeLibraryManager {
   private libraryPath: string;
@@ -65,10 +66,28 @@ export class ChallengeLibraryManager {
   }
 
   /**
-   * Check if a challenge signature exists in the library
+   * Check if a challenge is a duplicate.
+   * Checks both the local audit log (by signature) and the NightCafe history cache (by theme name).
+   * Emits a warning to stderr if the history cache is absent.
    */
-  public isDuplicate(signature: string): boolean {
-    return this.library.challenges.some((c) => c.signature === signature);
+  public isDuplicate(signature: string, theme?: string): boolean {
+    // Check local audit log
+    const inLog = this.library.challenges.some((c) => c.signature === signature);
+    if (inLog) return true;
+
+    // Check NightCafe history cache
+    if (theme !== undefined) {
+      const historyManager = new NightCafeHistoryManager();
+      if (!historyManager.cacheExists()) {
+        process.stderr.write(
+          'ℹ️  No NightCafe history cache found. Run `nightcafe-gen sync-history` to enable history-based deduplication.\n'
+        );
+      } else if (historyManager.isCachedTitle(theme)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**

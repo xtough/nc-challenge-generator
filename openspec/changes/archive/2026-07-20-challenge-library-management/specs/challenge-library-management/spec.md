@@ -1,30 +1,4 @@
-# Spec: Challenge Library Management
-
-## Purpose
-
-Maintain a persistent library of generated challenges for deduplication, history tracking, and optional resync from past NightCafe challenges.
-
----
-
-## Requirements
-
-### Requirement: Track generated challenges
-
-The system SHALL maintain a library of previously generated challenges to avoid duplicates.
-
-#### Scenario: New challenge is recorded
-- **WHEN** a challenge is generated
-- **THEN** it is automatically added to the challenge library with timestamp
-
-#### Scenario: Challenge library persists
-- **WHEN** system terminates and restarts
-- **THEN** challenge library data is preserved and accessible
-
-#### Scenario: View challenge history
-- **WHEN** user runs `nightcafe-gen --history`
-- **THEN** system displays previously generated challenges sorted by date
-
----
+## MODIFIED Requirements
 
 ### Requirement: Avoid generating duplicate challenges
 
@@ -45,8 +19,6 @@ The system SHALL check for duplicates against the cached NightCafe challenge his
 #### Scenario: No history cache present
 - **WHEN** the NightCafe history cache file does not exist
 - **THEN** deduplication proceeds using only the local audit log and a warning is shown prompting the user to run `sync-history`
-
----
 
 ### Requirement: Resync library from online source
 
@@ -72,17 +44,7 @@ The system SHALL provide a `sync-history` subcommand to fetch and cache past Nig
 - **WHEN** user runs `nightcafe-gen stats`
 - **THEN** output includes the timestamp of the last successful `sync-history` run and the number of cached NightCafe challenges
 
----
-
-### Requirement: Challenge library format
-
-The system SHALL store challenge data in structured JSON format.
-
-#### Scenario: Challenge record
-- **WHEN** accessing challenge data
-- **THEN** each challenge has: theme, categories with items, mandatory keyword, generated timestamp
-
----
+## ADDED Requirements
 
 ### Requirement: NightCafe history cache format
 

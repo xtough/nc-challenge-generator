@@ -8,6 +8,7 @@
  */
 
 import { ChallengeGenerator } from '../ChallengeGenerator';
+import { ChallengeLibraryManager } from '../ChallengeLibraryManager';
 import { OutputFormatterFactory } from '../OutputFormatter';
 import * as path from 'path';
 
@@ -108,5 +109,27 @@ describe('CLI argument handling invariants (task 12.4)', () => {
       expect(() => new ChallengeGenerator(tmp)).toThrow();
       f.unlinkSync(tmp);
     });
+  });
+});
+
+describe('isDuplicate called with theme argument (task 7.5)', () => {
+  const lib = new ChallengeLibraryManager();
+  const gen = new ChallengeGenerator(themesPath);
+
+  test('isDuplicate signature-only overload still works', () => {
+    const challenge = gen.generateRandomChallenge();
+    expect(typeof lib.isDuplicate(challenge.signature)).toBe('boolean');
+  });
+
+  test('isDuplicate with theme does not throw when history cache absent', () => {
+    const challenge = gen.generateChallengeForTheme('Vikings');
+    // No history cache file in test environment — should not throw, just warn
+    expect(() => lib.isDuplicate(challenge.signature, challenge.theme)).not.toThrow();
+  });
+
+  test('isDuplicate returns false for unseen theme against empty history', () => {
+    const challenge = gen.generateChallengeForTheme('Cyberpunk');
+    // History cache absent → only local log checked
+    expect(lib.isDuplicate(challenge.signature, challenge.theme)).toBe(false);
   });
 });

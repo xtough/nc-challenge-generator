@@ -4,6 +4,7 @@ import { Command } from 'commander';
 import * as path from 'path';
 import { ChallengeGenerator } from './ChallengeGenerator';
 import { ChallengeLibraryManager } from './ChallengeLibraryManager';
+import { NightCafeHistoryManager } from './NightCafeHistoryManager';
 import { OutputFormatterFactory } from './OutputFormatter';
 import { OutputManager } from './OutputManager';
 import { CheatSheetScraper, NightCafeScraper } from './Scrapers';
@@ -66,7 +67,7 @@ program
         : generator.generateRandomChallenge(opts);
 
       // Check for duplicates
-      if (options.dedupe && libraryManager.isDuplicate(challenge.signature)) {
+      if (options.dedupe && libraryManager.isDuplicate(challenge.signature, challenge.theme)) {
         console.log('⚠️  Generated challenge already exists in library. Regenerating...');
         // Skip reparse and just regenerate
         return;
@@ -193,6 +194,18 @@ program
       console.log(`\n  First Challenge: ${firstDate.toLocaleString()}`);
       console.log(`  Last Challenge: ${lastDate.toLocaleString()}`);
     }
+
+    // NightCafe history cache stats
+    console.log('\n  NightCafe History Cache:');
+    const historyManager = new NightCafeHistoryManager();
+    const historyStats = historyManager.getCacheStats();
+    if (historyStats.lastSynced === null) {
+      console.log('    No history cache — run `nightcafe-gen sync-history` to populate');
+    } else {
+      console.log(`    Cached Challenges: ${historyStats.total}`);
+      console.log(`    Last Synced: ${new Date(historyStats.lastSynced).toLocaleString()}`);
+    }
+
     console.log();
   });
 
@@ -242,17 +255,47 @@ program
  */
 program
   .command('resync-challenges')
-  .description('Update challenge library from NightCafe finished challenges')
+  .description('(Legacy) alias for sync-history')
+  .action(async () => {
+    console.log('ℹ️  This command is superseded by `sync-history`. Running sync-history...');
+    try {
+      const scraper = new NightCafeScraper();
+      const historyManager = new NightCafeHistoryManager();
+      const fetched = await scraper.scrapeChallenges();
+      const existing = historyManager.getEntries();
+      const existingTitles = new Set(existing.map((e) => e.title.toLowerCase()));
+      const newEntries = fetched.filter((e) => !existingTitles.has(e.title.toLowerCase()));
+      historyManager.saveCache([...existing, ...newEntries]);
+      console.log(`✓ Synced: ${newEntries.length} new, ${existing.length} already cached. Total: ${existing.length + newEntries.length}`);
+    } catch (error) {
+      console.error('Error:', (error as Error).message);
+      process.exit(1);
+    }
+  });
+
+/**
+ * Sync NightCafe challenge history for deduplication
+ */
+program
+  .command('sync-history')
+  .description('Fetch and cache past NightCafe Build-a-Prompt challenges for deduplication')
   .action(async () => {
     try {
       const scraper = new NightCafeScraper();
-      const challenges = await scraper.scrapeChallenges();
-      if (challenges.length > 0) {
-        libraryManager.addChallenges(challenges);
-        console.log(`✓ Added ${challenges.length} challenges from NightCafe!`);
-      } else {
-        console.log('⚠️  No challenges found or scraping not fully implemented.');
-      }
+      const historyManager = new NightCafeHistoryManager();
+
+      const fetched = await scraper.scrapeChallenges();
+
+      const existing = historyManager.getEntries();
+      const existingTitles = new Set(existing.map((e) => e.title.toLowerCase()));
+      const newEntries = fetched.filter((e) => !existingTitles.has(e.title.toLowerCase()));
+
+      historyManager.saveCache([...existing, ...newEntries]);
+
+      const lastSynced = new Date().toLocaleString();
+      console.log(`✓ History synced: ${newEntries.length} new challenges added, ${existing.length} already cached.`);
+      console.log(`  Total cached: ${existing.length + newEntries.length}`);
+      console.log(`  Last synced: ${lastSynced}`);
     } catch (error) {
       console.error('Error:', (error as Error).message);
       process.exit(1);

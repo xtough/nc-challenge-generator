@@ -4,7 +4,7 @@
  * Network calls are mocked via jest.mock so these tests run offline.
  */
 
-import { CheatSheetScraper } from '../Scrapers';
+import { CheatSheetScraper, NightCafeScraper } from '../Scrapers';
 import { Artist } from '../types';
 
 // Mock axios so no real HTTP calls are made
@@ -117,6 +117,90 @@ describe('CheatSheetScraper (tasks 10.8, 12.5)', () => {
     test('handles empty fetched list', () => {
       const merged = scraper.mergeArtists(existingArtists, []);
       expect(merged.length).toBe(existingArtists.length);
+    });
+  });
+});
+
+// Minimal HTML with __NEXT_DATA__ containing challenge objects (tasks 7.2, 7.3)
+const MOCK_NEXT_DATA_HTML = `<!DOCTYPE html><html><head></head><body>
+<script id="__NEXT_DATA__" type="application/json">
+{"props":{"pageProps":{"searchResults":{"challenges":[
+  {"title":"Vikings Build-a-Prompt Challenge","startsAtMs":1700000000000},
+  {"title":"Gothic Victorian Build-a-Prompt","startsAtMs":1701000000000},
+  {"title":"Cyberpunk Build-a-Prompt Challenge","startsAtMs":1702000000000}
+]}}},"page":"/search/challenges"}
+</script></body></html>`;
+
+describe('NightCafeScraper (tasks 7.2, 7.3)', () => {
+  let scraper: NightCafeScraper;
+
+  beforeEach(() => {
+    scraper = new NightCafeScraper();
+    jest.clearAllMocks();
+  });
+
+  describe('parseChallengesFromNextData() (task 7.2)', () => {
+    test('extracts titles from __NEXT_DATA__', () => {
+      const entries = scraper.parseChallengesFromNextData(MOCK_NEXT_DATA_HTML);
+      expect(entries.length).toBe(3);
+    });
+
+    test('entry titles match source data', () => {
+      const entries = scraper.parseChallengesFromNextData(MOCK_NEXT_DATA_HTML);
+      const titles = entries.map((e) => e.title);
+      expect(titles).toContain('Vikings Build-a-Prompt Challenge');
+      expect(titles).toContain('Gothic Victorian Build-a-Prompt');
+      expect(titles).toContain('Cyberpunk Build-a-Prompt Challenge');
+    });
+
+    test('each entry has a fetchedAt ISO timestamp', () => {
+      const entries = scraper.parseChallengesFromNextData(MOCK_NEXT_DATA_HTML);
+      for (const e of entries) {
+        expect(() => new Date(e.fetchedAt)).not.toThrow();
+        expect(new Date(e.fetchedAt).getTime()).toBeGreaterThan(0);
+      }
+    });
+  });
+
+  describe('parseChallengesFromNextData() error cases (task 7.3)', () => {
+    test('throws when __NEXT_DATA__ script tag is absent', () => {
+      expect(() => scraper.parseChallengesFromNextData('<html><body></body></html>')).toThrow(
+        'Could not find __NEXT_DATA__'
+      );
+    });
+
+    test('throws when __NEXT_DATA__ contains malformed JSON', () => {
+      const badHtml = `<script id="__NEXT_DATA__" type="application/json">not-json</script>`;
+      expect(() => scraper.parseChallengesFromNextData(badHtml)).toThrow(
+        'Failed to parse __NEXT_DATA__'
+      );
+    });
+
+    test('throws when challenge array cannot be located in the JSON', () => {
+      const emptyHtml = `<script id="__NEXT_DATA__" type="application/json">{"props":{}}</script>`;
+      expect(() => scraper.parseChallengesFromNextData(emptyHtml)).toThrow(
+        'Could not locate challenge list'
+      );
+    });
+  });
+
+  describe('scrapeChallenges() network integration', () => {
+    test('returns parsed entries from mocked HTTP response', async () => {
+      (axios as jest.Mocked<typeof axios>).get = jest.fn().mockResolvedValue({ data: MOCK_NEXT_DATA_HTML });
+      const entries = await scraper.scrapeChallenges();
+      expect(entries.length).toBe(3);
+    });
+
+    test('throws descriptive error on 403', async () => {
+      const err: any = new Error('403');
+      err.response = { status: 403 };
+      (axios as jest.Mocked<typeof axios>).get = jest.fn().mockRejectedValue(err);
+      await expect(scraper.scrapeChallenges()).rejects.toThrow('403 Forbidden');
+    });
+
+    test('throws on generic network error', async () => {
+      (axios as jest.Mocked<typeof axios>).get = jest.fn().mockRejectedValue(new Error('timeout'));
+      await expect(scraper.scrapeChallenges()).rejects.toThrow('Failed to fetch NightCafe challenges');
     });
   });
 });

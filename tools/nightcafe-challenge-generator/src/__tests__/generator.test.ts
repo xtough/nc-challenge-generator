@@ -280,7 +280,7 @@ describe('ChallengeLibraryManager - deduplication (task 6.6)', () => {
   test('isDuplicate returns true after adding challenge', () => {
     const challenge = generator.generateRandomChallenge();
     lib.addChallenge(challenge);
-    expect(lib.isDuplicate(challenge.signature)).toBe(true);
+    expect(lib.isDuplicate(challenge.signature, challenge.theme)).toBe(true);
   });
 
   test('adding same challenge twice does not change duplicate state', () => {
@@ -289,7 +289,7 @@ describe('ChallengeLibraryManager - deduplication (task 6.6)', () => {
     const countAfterFirst = lib.getAllChallenges().length;
     // Note: addChallenge does not prevent duplicates - isDuplicate is the guard
     // The CLI checks isDuplicate before calling addChallenge
-    expect(lib.isDuplicate(challenge.signature)).toBe(true);
+    expect(lib.isDuplicate(challenge.signature, challenge.theme)).toBe(true);
     expect(lib.getAllChallenges().length).toBe(countAfterFirst);
   });
 
@@ -302,6 +302,13 @@ describe('ChallengeLibraryManager - deduplication (task 6.6)', () => {
   test('signature starts with theme name', () => {
     const challenge = generator.generateChallengeForTheme('Cyberpunk');
     expect(challenge.signature.startsWith('Cyberpunk|')).toBe(true);
+  });
+
+  test('isDuplicate accepts theme as optional second argument (task 7.4)', () => {
+    // Without theme — just local log check (no history cache in test env)
+    const challenge = generator.generateRandomChallenge();
+    expect(() => lib.isDuplicate(challenge.signature)).not.toThrow();
+    expect(() => lib.isDuplicate(challenge.signature, challenge.theme)).not.toThrow();
   });
 });
 

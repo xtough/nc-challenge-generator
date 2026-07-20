@@ -58,6 +58,19 @@ export interface ChallengeLibrary {
   };
 }
 
+export interface NightCafeHistoryEntry {
+  title: string;
+  fetchedAt: string;
+}
+
+export interface NightCafeHistoryCache {
+  entries: NightCafeHistoryEntry[];
+  metadata: {
+    total: number;
+    lastSynced: string;
+  };
+}
+
 export interface GeneratorOptions {
   theme?: string;
   itemsPerCategory?: number;

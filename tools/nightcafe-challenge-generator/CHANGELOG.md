@@ -108,4 +108,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Startup time: <1s (TypeScript compilation via ts-node)
 - Test suite execution: <3s
 
-[1.0.0]: https://github.com/yourusername/nightcafe-challenge-generator/releases/tag/v1.0.0
+## [1.1.0] - 2026-07-20
+
+### Added
+
+- **`sync-history` command**: Fetches and caches past NightCafe Build-a-Prompt challenges from the official challenge search URL into `~/.nightcafe-gen/nightcafe-history.json`
+- **`NightCafeHistoryManager`**: New class managing the NightCafe history cache — load, save, and theme-based lookup
+- **Two-layer deduplication**: `isDuplicate()` now checks both the local audit log (signature match) and the NightCafe history cache (case-insensitive theme name substring match)
+- **403 bypass via `NIGHTCAFE_COOKIE`**: Set `$env:NIGHTCAFE_COOKIE` to your browser session cookie to bypass Cloudflare bot protection during `sync-history`
+- **`NightCafeHistoryEntry` and `NightCafeHistoryCache` types** added to `types.ts`
+- **History cache info in `stats`**: Shows cached challenge count and last-synced timestamp; prompts to run `sync-history` when cache is absent
+- **`resync-challenges` legacy alias**: Now delegates to `sync-history` behavior
+
+### Changed
+
+- `ChallengeLibraryManager.isDuplicate(signature)` signature extended to `isDuplicate(signature, theme?)` — backwards-compatible
+- `NightCafeScraper` fully implemented: parses `__NEXT_DATA__` SSR JSON blob, recursively finds challenge arrays, handles 403/malformed JSON with descriptive errors
+
+### Fixed
+
+- `resync-challenges` command previously returned nothing (stub); now works via the new `sync-history` implementation
+
+[1.1.0]: https://github.com/xtough/nc-challenge-generator/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/xtough/nc-challenge-generator/releases/tag/v1.0.0
