@@ -149,6 +149,43 @@ nightcafe-gen clear --confirm
 nightcafe-gen resync-artists
 ```
 
+## Understanding Artistic Styles
+
+The **style** category now uses authentic **art movements and epochs** instead of generic descriptors. This provides better context for AI art generation and aligns with actual art history:
+
+### Major Art Movements Included
+
+**Classical & Renaissance**
+- Renaissance, Medieval, Baroque, Academicism, Neoclassicism
+
+**Modern & Contemporary**
+- Romanticism, Impressionism, Post-Impressionism, Expressionism, Surrealism
+- Cubism, Futurism, Dadaism, Constructivism, Brutalism
+
+**Popular & Applied**
+- Art Nouveau, Art Deco, Fauvism, Pointillism, Symbolism
+- Steampunk, Cyberpunk, Grunge, Synthwave, Pre-Raphaelite
+
+**Specialized**
+- Metaphysical, Hyperrealism, Illustrative, Realism, Gothic
+
+Each theme is curated with 5 artistic styles that match its aesthetic. When you generate a challenge, one style is randomly selected from the theme's pool.
+
+## Categories Explained
+
+Every challenge includes **six categories**:
+
+| Category | Purpose | Example |
+|----------|---------|---------|
+| **SUBJECT** | What is depicted | warrior, dragon, flower |
+| **SETTING** | Where the action takes place | fjord, castle, garden |
+| **MOOD** | Emotional atmosphere | fierce, serene, playful |
+| **ARTIST** | Artistic reference (auto-selected) | Greg Rutkowski, Van Gogh |
+| **MEDIUM** | What technique to use | oil painting, digital art |
+| **STYLE** | Artistic movement/epoch | Renaissance, Cyberpunk |
+
+The **ARTIST** category is automatically selected from a library of 900+ artists and filtered to match your theme's artistic styles for thematic coherence.
+
 ## Sync NightCafe Challenge History
 
 The generator deduplicates against past NightCafe challenges in addition to your locally-generated log. Populate the local history cache with:
@@ -213,12 +250,15 @@ tools/nightcafe-challenge-generator/
         "setting": ["fjord", "longship", ...],
         "mood": ["fierce", "adventurous", ...],
         "medium": ["oil painting", "concept art", ...],
-        "style": ["realistic", "fantasy", ...]
+        "style": ["Romanticism", "Renaissance", "Gothic", "Grunge", "Medieval"],
+        "artist": []
       }
     }
   ]
 }
 ```
+
+**Note:** The `artist` category is automatically populated during challenge generation with a single artist selected from the library and filtered for theme compatibility.
 
 ### artists.json
 
@@ -330,7 +370,7 @@ npm run dev -- themes   # verify it appears in the list
 ════════════════════════════════════════════════════════════
 ```
 
-### Markdown (`--format markdown`)
+### Markdown (`--format markdown`) - NightCafe Compatible
 
 ```markdown
 # 🏗️ BUILD A PROMPT 🏗️ Vikings 🛶🌳🐍
@@ -340,23 +380,49 @@ npm run dev -- themes   # verify it appears in the list
 ## Instructions
 Pick **1 item** from each category below to build your prompt.
 
-### Subject
-- berserker
-- explorer
-- raider
-- viking captain
-- warrior
+### SUBJECT
+1. berserker
+2. explorer
+3. raider
+4. viking captain
+5. warrior
 
-### Setting
-- fjord
-- forest
-- icy mountain
-- mead hall
-- viking settlement
+### SETTING
+1. fjord
+2. forest
+3. icy mountain
+4. mead hall
+5. viking settlement
+
+### MOOD
+1. adventurous
+2. fierce
+3. harsh
+4. mysterious
+5. primal
+
+### ARTIST
+1. Greg Rutkowski
+
+### MEDIUM
+1. concept art
+2. digital art
+3. oil painting
+4. sketch
+5. watercolor
+
+### STYLE
+1. Gothic
+2. Grunge
+3. Medieval
+4. Renaissance
+5. Romanticism
 
 ---
 *Generated on 7/20/2026, 10:07:25 AM*
 ```
+
+✨ **This format is compatible with NightCafe's Build-a-Prompt structure for easy copy-paste!**
 
 ### JSON (`--format json`)
 
@@ -370,11 +436,12 @@ Pick **1 item** from each category below to build your prompt.
     "subject": ["berserker", "explorer", "raider", "viking captain", "warrior"],
     "setting": ["fjord", "forest", "icy mountain", "mead hall", "viking settlement"],
     "mood": ["adventurous", "fierce", "harsh", "mysterious", "primal"],
+    "artist": ["Greg Rutkowski"],
     "medium": ["concept art", "digital art", "oil painting", "sketch", "watercolor"],
-    "style": ["dramatic", "fantasy", "historical", "realistic", "stylized"]
+    "style": ["Gothic", "Grunge", "Medieval", "Renaissance", "Romanticism"]
   },
   "generatedAt": "2026-07-20T10:07:25.000Z",
-  "signature": "Vikings|medium:concept art,..."
+  "signature": "Vikings|artist:Greg Rutkowski|medium:concept art,...|style:Gothic,..."
 }
 ```
 

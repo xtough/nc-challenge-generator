@@ -38,11 +38,11 @@
           "sketch"
         ],
         "style": [
-          "realistic",
-          "stylized",
-          "fantasy",
-          "historical",
-          "dramatic"
+          "Romanticism",
+          "Renaissance",
+          "Grunge",
+          "Medieval",
+          "Gothic"
         ]
       }
     },
@@ -84,11 +84,11 @@
           "illustration"
         ],
         "style": [
-          "gothic",
-          "ornate",
-          "steampunk",
-          "dark academia",
-          "romantic"
+          "Baroque",
+          "Romanticism",
+          "Steampunk",
+          "Gothic",
+          "Art Nouveau"
         ]
       }
     },
@@ -130,11 +130,11 @@
           "concept art"
         ],
         "style": [
-          "realistic",
-          "minimalist",
-          "abstract",
-          "architectural",
-          "industrial"
+          "Brutalism",
+          "Minimalism",
+          "Constructivism",
+          "Expressionism",
+          "Dadaism"
         ]
       }
     },
@@ -176,11 +176,11 @@
           "illustration"
         ],
         "style": [
-          "realistic",
-          "cinematic",
-          "dramatic",
-          "abstract",
-          "ethereal"
+          "Impressionism",
+          "Romanticism",
+          "Expressionism",
+          "Realism",
+          "Surrealism"
         ]
       }
     },
@@ -222,11 +222,11 @@
           "mixed media"
         ],
         "style": [
-          "surreal",
-          "abstract",
-          "psychedelic",
-          "escher-inspired",
-          "futuristic"
+          "Surrealism",
+          "Cubism",
+          "Dadaism",
+          "Metaphysical",
+          "Futurism"
         ]
       }
     },
@@ -268,11 +268,11 @@
           "photograph"
         ],
         "style": [
-          "photorealistic",
-          "realistic",
-          "hyperrealistic",
-          "academic",
-          "classical"
+          "Realism",
+          "Academicism",
+          "Neoclassicism",
+          "Renaissance",
+          "Hyperrealism"
         ]
       }
     },
@@ -314,11 +314,11 @@
           "mixed media"
         ],
         "style": [
-          "whimsical",
-          "fantasy",
-          "illustration",
-          "storybook",
-          "stylized"
+          "Art Nouveau",
+          "Art Deco",
+          "Surrealism",
+          "Illustrative",
+          "Fauvism"
         ]
       }
     },
@@ -360,11 +360,11 @@
           "illustration"
         ],
         "style": [
-          "realistic",
-          "impressionist",
-          "delicate",
-          "vibrant",
-          "ethereal"
+          "Impressionism",
+          "Romanticism",
+          "Post-Impressionism",
+          "Pointillism",
+          "Art Nouveau"
         ]
       }
     },
@@ -406,11 +406,11 @@
           "mixed media"
         ],
         "style": [
-          "cyberpunk",
-          "neon",
-          "futuristic",
-          "sci-fi",
-          "dystopian"
+          "Cyberpunk",
+          "Futurism",
+          "Art Deco",
+          "Synthwave",
+          "Constructivism"
         ]
       }
     },
@@ -452,11 +452,11 @@
           "watercolor"
         ],
         "style": [
-          "fantasy",
-          "realistic",
-          "epic",
-          "medieval",
-          "dramatic"
+          "Medieval",
+          "Renaissance",
+          "Romanticism",
+          "Gothic",
+          "Baroque"
         ]
       }
     },
@@ -498,11 +498,11 @@
           "concept art"
         ],
         "style": [
-          "ethereal",
-          "realistic",
-          "surreal",
-          "fantasy",
-          "cinematic"
+          "Impressionism",
+          "Romanticism",
+          "Surrealism",
+          "Pre-Raphaelite",
+          "Symbolism"
         ]
       }
     },
@@ -544,11 +544,11 @@
           "photography"
         ],
         "style": [
-          "surreal",
-          "sci-fi",
-          "abstract",
-          "cosmic",
-          "ethereal"
+          "Surrealism",
+          "Cubism",
+          "Futurism",
+          "Metaphysical",
+          "Constructivism"
         ]
       }
     },
@@ -590,11 +590,11 @@
           "charcoal"
         ],
         "style": [
-          "realistic",
-          "expressive",
-          "stylized",
-          "dramatic",
-          "classical"
+          "Renaissance",
+          "Expressionism",
+          "Romanticism",
+          "Baroque",
+          "Realism"
         ]
       }
     }

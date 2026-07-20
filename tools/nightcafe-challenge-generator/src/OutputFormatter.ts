@@ -42,10 +42,20 @@ export class MarkdownFormatter extends OutputFormatter {
     output += '## Instructions\n';
     output += 'Pick **1 item** from each category below to build your prompt.\n\n';
 
-    for (const [categoryName, items] of Object.entries(challenge.categories)) {
-      output += `### ${categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}\n`;
-      output += items.map((item) => `- ${item}`).join('\n');
-      output += '\n\n';
+    // Define category order for NightCafe format
+    const categoryOrder = ['subject', 'setting', 'mood', 'artist', 'medium', 'style'];
+    
+    for (const categoryName of categoryOrder) {
+      const items = challenge.categories[categoryName];
+      if (!items) continue;
+
+      // Format category name in uppercase for NightCafe style
+      const displayName = categoryName === 'artist' ? 'ARTIST' : categoryName.toUpperCase();
+      output += `### ${displayName}\n`;
+      items.forEach((item, index) => {
+        output += `${index + 1}. ${item}\n`;
+      });
+      output += '\n';
     }
 
     output += '---\n';

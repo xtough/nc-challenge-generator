@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+#### Artist Category Enhancement
+- **Artist Category**: Every challenge now includes a required artist category with automatic selection from 900+ artist library
+- **Theme-Compatible Artist Selection**: Artists are filtered by theme affinity using intersection of artist.themes and theme.categories.style
+- **Fallback Logic**: If no theme-compatible artists found, randomly selects from entire artist library
+
+#### Artistic Styles Refactoring
+- **Art Movement Categories**: Replaced generic style descriptors with authentic artistic movements and epochs
+  - 40+ art movements: Renaissance, Romanticism, Impressionism, Surrealism, Cubism, Futurism, Cyberpunk, Brutalism, Art Deco, etc.
+  - Each theme now maps to 5 artistic styles that match its aesthetic
+  - Educational value: users learn actual art history through generated challenges
+
+#### Output Format Compliance
+- **NightCafe Format Alignment**: Markdown output now matches NightCafe's Build-a-Prompt structure for seamless copy-paste
+  - Numbered lists instead of bullet points
+  - Uppercase category headers (`### SUBJECT`, `### ARTIST`, `### STYLE`, etc.)
+  - Specific category order (SUBJECT, SETTING, MOOD, ARTIST, MEDIUM, STYLE)
+- **JSON Structure**: Artist category now included in all JSON outputs
+
+#### Signature Updates
+- **Deduplication Accuracy**: Challenge signatures now include artist category, making dedup more precise (same theme + items but different artist = not duplicate)
+
+### Changed
+- Challenge type now generates 6 categories instead of 5 (added artist)
+- `ChallengeGenerator` constructor now loads artists.json automatically
+- Markdown formatter output restructured to match NightCafe convention
+- All theme style pools updated with art movements instead of descriptors
+
+### Documentation
+- README updated with artistic styles reference and art movement guide
+- Category explanation table added
+- Example outputs updated to show artist category
+- NightCafe format compatibility noted for markdown output
+
 ## [1.0.0] - 2024-07-20
 
 ### Added

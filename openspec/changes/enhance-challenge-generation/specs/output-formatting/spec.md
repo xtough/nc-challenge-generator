@@ -1,12 +1,6 @@
-# Spec: Output Formatting
+# Delta Spec: Output Formatting
 
-## Purpose
-
-Format generated challenges for different consumers: terminal display (pretty-print), documentation sharing (markdown), and programmatic access (JSON). Supports writing to stdout or file.
-
----
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Output formatted for terminal (pretty-print)
 

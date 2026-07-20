@@ -1,16 +1,22 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { Challenge, Theme, ThemesData, GeneratorOptions } from './types';
+import { Challenge, Theme, ThemesData, GeneratorOptions, Artist, ArtistsData } from './types';
 import { ThemeMatcher } from './ThemeMatcher';
 
 export class ChallengeGenerator {
   private themesData: ThemesData;
+  private artistsData: ArtistsData;
   private themeMatcher: ThemeMatcher;
 
-  constructor(themesPath: string) {
+  constructor(themesPath: string, artistsPath?: string) {
     const themesContent = fs.readFileSync(themesPath, 'utf-8');
     this.themesData = JSON.parse(themesContent);
     this.themeMatcher = new ThemeMatcher(this.themesData);
+
+    // Load artists data from path relative to themes.json or provided path
+    const resolvedArtistsPath = artistsPath || path.join(path.dirname(themesPath), 'artists.json');
+    const artistsContent = fs.readFileSync(resolvedArtistsPath, 'utf-8');
+    this.artistsData = JSON.parse(artistsContent);
   }
 
   /**
@@ -37,8 +43,20 @@ export class ChallengeGenerator {
     const categories: Record<string, string[]> = {};
 
     for (const [categoryName, categoryItems] of Object.entries(theme.categories)) {
-      const count = categoryOverrides[categoryName] !== undefined ? categoryOverrides[categoryName] : itemsPerCategory;
-      categories[categoryName] = this.selectRandomItems(categoryItems, count);
+      // Artist category always has exactly 1 item, never overrideable
+      if (categoryName === 'artist') {
+        const artist = this.selectArtistForTheme(theme);
+        categories[categoryName] = [artist.name];
+      } else {
+        const count = categoryOverrides[categoryName] !== undefined ? categoryOverrides[categoryName] : itemsPerCategory;
+        categories[categoryName] = this.selectRandomItems(categoryItems, count);
+      }
+    }
+
+    // If theme doesn't have artist category yet (backward compat), add it
+    if (!categories['artist']) {
+      const artist = this.selectArtistForTheme(theme);
+      categories['artist'] = [artist.name];
     }
 
     // Generate unique ID and signature
@@ -85,6 +103,30 @@ export class ChallengeGenerator {
   public getRandomTheme(): Theme {
     const randomIndex = Math.floor(Math.random() * this.themesData.themes.length);
     return this.themesData.themes[randomIndex];
+  }
+
+  /**
+   * Select an artist for a theme, filtered by theme-compatible styles
+   */
+  private selectArtistForTheme(theme: Theme): Artist {
+    const themeStyles = theme.categories['style'] || [];
+    const themeStyleSet = new Set(themeStyles.map(s => s.toLowerCase()));
+
+    // Filter artists whose themes intersect with theme styles
+    const compatibleArtists = this.artistsData.artists.filter(artist => {
+      const artistThemes = (artist.themes || []).map(t => t.toLowerCase());
+      const artistEra = (artist.era || '').toLowerCase();
+
+      // Check if artist's era or themes match any theme style
+      return themeStyleSet.has(artistEra) || 
+             artistThemes.some(t => themeStyleSet.has(t)) ||
+             themeStyleSet.has(artist.name.toLowerCase());
+    });
+
+    // Fallback to random artist if no theme-compatible artists found
+    const selectedPool = compatibleArtists.length > 0 ? compatibleArtists : this.artistsData.artists;
+    const randomIndex = Math.floor(Math.random() * selectedPool.length);
+    return selectedPool[randomIndex];
   }
 
   /**

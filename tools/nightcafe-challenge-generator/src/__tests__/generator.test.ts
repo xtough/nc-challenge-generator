@@ -338,16 +338,17 @@ describe('OutputFormatters - full coverage (task 7.5)', () => {
 
   test('markdown includes all categories as headings', () => {
     const output = OutputFormatterFactory.create('markdown').format(challenge);
-    expect(output).toContain('### Subject');
-    expect(output).toContain('### Setting');
-    expect(output).toContain('### Mood');
-    expect(output).toContain('### Medium');
-    expect(output).toContain('### Style');
+    expect(output).toContain('### SUBJECT');
+    expect(output).toContain('### SETTING');
+    expect(output).toContain('### MOOD');
+    expect(output).toContain('### ARTIST');
+    expect(output).toContain('### MEDIUM');
+    expect(output).toContain('### STYLE');
   });
 
-  test('markdown items are formatted as list items', () => {
+  test('markdown items are formatted as numbered list items', () => {
     const output = OutputFormatterFactory.create('markdown').format(challenge);
-    expect(output).toMatch(/^- /m);
+    expect(output).toMatch(/^\d+\. /m);
   });
 
   test('json formatter includes all challenge fields', () => {

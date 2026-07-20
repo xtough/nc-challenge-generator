@@ -1,12 +1,6 @@
-# Spec: Challenge Generation
+# Delta Spec: Challenge Generation
 
-## Purpose
-
-Core challenge generation engine for creating NightCafe Build-a-Prompt challenges. Supports random theme selection, targeted theme generation, and configurable item counts per category.
-
----
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Generate random challenge with themed categories
 
@@ -69,6 +63,8 @@ The system SHALL allow configuration of how many items to suggest per category. 
 - **THEN** system ignores artist count override and generates exactly 1 artist per challenge
 
 ---
+
+## ADDED Requirements
 
 ### Requirement: Select artist from library
 
