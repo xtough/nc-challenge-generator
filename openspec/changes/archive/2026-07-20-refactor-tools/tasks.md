@@ -32,6 +32,6 @@
 ## 6. Finalization
 
 - [x] 6.1 Verify `tools/` directory is empty (or remove if no other projects exist there)
-- [ ] 6.2 Commit the directory move with clear message about the refactoring
-- [ ] 6.3 Push to origin and verify CI/CD passes with new paths
-- [ ] 6.4 Update any external documentation or links to old project path (if applicable)
+- [x] 6.2 Commit the directory move with clear message about the refactoring
+- [x] 6.3 Push to origin and verify CI/CD passes with new paths
+- [x] 6.4 Update any external documentation or links to old project path (if applicable)
