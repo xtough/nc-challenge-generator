@@ -7,12 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- CI now correctly runs Jest/TypeScript tests: `jest.config.js` was silently excluded from the repository by the `*.js` rule in `.gitignore`, causing GitHub Actions to fall back to plain Babel (no TypeScript support) and fail on every test suite. Renamed to `jest.config.ts`, which is not matched by the ignore rule.
+
 ### Changed
 
 - CI workflow now runs only on Node.js 24.x to match the package engine requirement and avoid unsupported matrix failures on GitHub Actions.
 - README prerequisites now state Node.js 24+ to align with runtime policy and CI.
-
-### Changed
 
 #### Project Structure Refactoring
 - **Directory Relocation**: Project moved from `tools/nightcafe-challenge-generator/` to workspace root level (`nightcafe-challenge-generator/`)
