@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- CI workflow now runs only on Node.js 24.x to match the package engine requirement and avoid unsupported matrix failures on GitHub Actions.
+- README prerequisites now state Node.js 24+ to align with runtime policy and CI.
+
+### Changed
+
 #### Project Structure Refactoring
 - **Directory Relocation**: Project moved from `tools/nightcafe-challenge-generator/` to workspace root level (`nightcafe-challenge-generator/`)
   - Reduces path complexity and clarifies project structure

@@ -27,7 +27,7 @@ A CLI tool to generate NightCafe "Build-a-Prompt" challenges with themed categor
 ## Installation
 
 ### Prerequisites
-- Node.js 18+ (verify with `node --version`)
+- Node.js 24+ (verify with `node --version`)
 - npm (verify with `npm --version`)
 
 ### From Source
