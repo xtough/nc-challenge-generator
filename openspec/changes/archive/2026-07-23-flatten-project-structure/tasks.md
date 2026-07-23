@@ -24,4 +24,4 @@
 
 ## 5. Commit
 
-- [ ] 5.1 Commit all changes in a single commit with message `refactor: flatten project structure — move nightcafe-challenge-generator/ to repo root`
+- [x] 5.1 Commit all changes in a single commit with message `refactor: flatten project structure — move nightcafe-challenge-generator/ to repo root`

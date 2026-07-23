@@ -2,7 +2,7 @@
 
 ### Requirement: CI/CD build process
 
-The GitHub Actions workflow SHALL execute the TypeScript build step **before** running tests to ensure all source code is compiled to JavaScript.
+The GitHub Actions workflow SHALL execute all steps (`npm ci`, `npm run build`, `npm test`) at the repository root with no `working-directory` override, because project files are now at the root.
 
 #### Scenario: Build runs before tests
 - **WHEN** GitHub Actions workflow is triggered
@@ -19,3 +19,8 @@ The GitHub Actions workflow SHALL execute the TypeScript build step **before** r
 #### Scenario: No SyntaxErrors from TypeScript
 - **WHEN** npm test runs after successful build
 - **THEN** no SyntaxError is raised due to uncompiled TypeScript syntax
+
+#### Scenario: Workflow runs from repo root
+
+- **WHEN** GitHub Actions workflow is triggered
+- **THEN** no `working-directory` or `cache-dependency-path` points to `nightcafe-challenge-generator/`
