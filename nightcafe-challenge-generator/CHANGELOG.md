@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - CI now correctly runs Jest/TypeScript tests: `jest.config.js` was silently excluded from the repository by the `*.js` rule in `.gitignore`, causing GitHub Actions to fall back to plain Babel (no TypeScript support) and fail on every test suite. Renamed to `jest.config.ts`, which is not matched by the ignore rule.
+- `sync-history` now successfully fetches past challenges. The previous axios-based scraper was blocked by Cloudflare TLS fingerprinting. Replaced with a Playwright headless Chromium browser that injects session cookies, patches `navigator.webdriver`, and intercepts the Typesense API response directly. Also fixed pagination: the route interceptor rewrites the Typesense POST body to set `per_page: 250`, fetching all challenges instead of the default 12.
 
 ### Changed
 
