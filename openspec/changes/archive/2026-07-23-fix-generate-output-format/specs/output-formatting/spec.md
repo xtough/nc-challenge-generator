@@ -1,12 +1,4 @@
-# Spec: Output Formatting
-
-## Purpose
-
-Format generated challenges for different consumers: terminal display (pretty-print), documentation sharing (markdown), and programmatic access (JSON). Supports writing to stdout or file.
-
----
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Output formatted for terminal (pretty-print)
 
@@ -25,7 +17,6 @@ The system SHALL display challenges as a flat bullet list matching NightCafe's p
 - **THEN** header shows the theme name and NightCafe challenge rules (pick 1 from each list, title rules, voting rules, allowed/disallowed actions)
 
 #### Scenario: Output matches NightCafe flat bullet format
-
 - **WHEN** pretty-print is generated
 - **THEN** output matches the structure of `data/challenge-example.md`: one `- keyword (required)` line, then one `- Item1, Item2, Item3, Item4, Item5` bullet per category, then an example line
 
@@ -44,39 +35,9 @@ The system SHALL generate markdown-formatted challenge output as a flat bullet l
 - **THEN** challenge is written to specified file in NightCafe-compatible flat bullet format
 
 #### Scenario: Markdown includes all categories
-
 - **WHEN** markdown is generated
 - **THEN** it contains one bullet per category with comma-separated items, no category name headers
 
 #### Scenario: Example line at bottom
-
 - **WHEN** any formatted output is generated
 - **THEN** an example line at the bottom shows a sample combined prompt using the first item from each category
-
----
-
-### Requirement: Output as JSON
-
-The system SHALL provide JSON output for programmatic use. Artist category SHALL be included in all JSON outputs.
-
-#### Scenario: JSON output
-- **WHEN** user runs `nightcafe-gen --format json`
-- **THEN** system outputs structured JSON to stdout with artist in categories
-
-#### Scenario: JSON file output
-- **WHEN** user runs `nightcafe-gen --format json --output challenge.json`
-- **THEN** challenge is written to specified file in JSON format with artist included
-
-#### Scenario: JSON structure includes artist
-- **WHEN** JSON is generated
-- **THEN** it contains: theme, mandatoryKeyword, categories (object with subject, setting, mood, artist, medium, style arrays)
-
----
-
-### Requirement: Multi-format simultaneous output
-
-The system MAY generate challenge in multiple formats at once.
-
-#### Scenario: Generate all formats
-- **WHEN** user runs `nightcafe-gen --format all`
-- **THEN** challenge is output to terminal with artist, saved as challenge.md in NightCafe format, and saved as challenge.json with artist category included
