@@ -19,6 +19,7 @@ jest.mock('playwright', () => {
   };
   const mockContext = {
     addCookies: jest.fn(),
+    addInitScript: jest.fn(),
     newPage: jest.fn().mockResolvedValue(mockPage),
   };
   const mockBrowser = {
