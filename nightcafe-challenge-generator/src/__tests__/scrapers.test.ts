@@ -18,6 +18,7 @@ jest.mock('playwright', () => {
   };
   const mockPage = {
     goto: jest.fn(),
+    route: jest.fn().mockResolvedValue(undefined),
     waitForResponse: jest.fn().mockResolvedValue(mockTypesenseResponse),
   };
   const mockContext = {

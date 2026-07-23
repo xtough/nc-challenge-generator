@@ -169,6 +169,20 @@ export class NightCafeScraper {
       const page = await context.newPage();
       console.log('Fetching NightCafe challenge history...');
 
+      // Intercept the Typesense request and set per_page to 250 (API max) to get all results
+      await page.route(`**/${this.typesenseHost}/**`, async (route) => {
+        const request = route.request();
+        try {
+          const body = JSON.parse(request.postData() ?? '{}');
+          if (Array.isArray(body.searches)) {
+            body.searches = body.searches.map((s: any) => ({ ...s, per_page: 250 }));
+          }
+          await route.continue({ postData: JSON.stringify(body) });
+        } catch {
+          await route.continue();
+        }
+      });
+
       const typesenseResponsePromise = page.waitForResponse(
         (resp) => resp.url().includes(this.typesenseHost) && resp.url().includes('multi_search'),
         { timeout: 30000 }
