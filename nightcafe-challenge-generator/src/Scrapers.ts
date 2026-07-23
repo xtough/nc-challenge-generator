@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { chromium } from 'playwright';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ArtistsData, Artist, NightCafeHistoryEntry } from './types';
@@ -132,48 +133,52 @@ export class NightCafeScraper {
     'https://creator.nightcafe.studio/search/challenges?sort=challenges%2Fsort%2FstartsAtMs%3Adesc&stillJoinable=false&status=finished&chatRoomName=C3xF%27s+Build+a+Prompt+Challenge%2CBuild+a+Prompt+Challenge%2CC3xF%27s%2C+%22Portraits+Build+a+Prompt%22+Challenge+';
 
   /**
-   * Fetch finished Build-a-Prompt challenges from NightCafe.
-   * Parses challenge titles from the __NEXT_DATA__ JSON blob embedded in the page HTML.
-   *
-   * NOTE: NightCafe uses Cloudflare bot protection. If this returns a 403, the user
-   * may need to provide a session cookie via the NIGHTCAFE_COOKIE environment variable.
+   * Fetch finished Build-a-Prompt challenges from NightCafe using a headless Chromium browser.
+   * Uses a real browser TLS fingerprint to bypass Cloudflare bot protection.
+   * Set NIGHTCAFE_COOKIE to your browser session cookie to authenticate.
    */
   async scrapeChallenges(): Promise<NightCafeHistoryEntry[]> {
-    const headers: Record<string, string> = {
-      'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-      'Accept-Language': 'en-US,en;q=0.9',
-    };
+    const cookieHeader = process.env.NIGHTCAFE_COOKIE;
 
-    // Allow the user to pass a session cookie to bypass Cloudflare bot protection
-    const cookie = process.env.NIGHTCAFE_COOKIE;
-    if (cookie) {
-      headers['Cookie'] = cookie;
-    }
-
-    let html: string;
+    const browser = await chromium.launch({ headless: true });
     try {
+      const context = await browser.newContext();
+
+      if (cookieHeader) {
+        const cookies = cookieHeader.split(';').map((pair: string) => {
+          const eqIdx = pair.indexOf('=');
+          return {
+            name: pair.slice(0, eqIdx).trim(),
+            value: pair.slice(eqIdx + 1).trim(),
+            domain: 'creator.nightcafe.studio',
+            path: '/',
+          };
+        });
+        await context.addCookies(cookies);
+      }
+
+      const page = await context.newPage();
       console.log('Fetching NightCafe challenge history...');
-      const response = await axios.get(this.challengesUrl, {
-        timeout: 15000,
-        headers,
-      });
-      html = response.data;
-    } catch (error: any) {
-      const status = error?.response?.status;
-      if (status === 403) {
+
+      const response = await page.goto(this.challengesUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
+
+      if (response?.status() === 403) {
         throw new Error(
           'NightCafe returned 403 Forbidden (Cloudflare bot protection).\n' +
-            'To bypass, set the NIGHTCAFE_COOKIE environment variable to your browser session cookie:\n' +
-            '  $env:NIGHTCAFE_COOKIE="<paste cookie value from browser DevTools>"\n' +
-            '  nightcafe-gen sync-history'
+            'Set the NIGHTCAFE_COOKIE environment variable to your browser session cookie:\n' +
+            '  $env:NIGHTCAFE_COOKIE = Get-Content data/cookie.txt -Raw\n' +
+            '  npm run dev -- sync-history'
         );
       }
-      throw new Error(`Failed to fetch NightCafe challenges: ${error}`);
-    }
 
-    return this.parseChallengesFromNextData(html);
+      const html = await page.content();
+      return this.parseChallengesFromNextData(html);
+    } catch (error: any) {
+      if (error.message.includes('403 Forbidden')) throw error;
+      throw new Error(`Failed to fetch NightCafe challenges: ${error}`);
+    } finally {
+      await browser.close();
+    }
   }
 
   /**

@@ -12,6 +12,29 @@ jest.mock('axios');
 import axios from 'axios';
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
+jest.mock('playwright', () => {
+  const mockPage = {
+    goto: jest.fn(),
+    content: jest.fn(),
+  };
+  const mockContext = {
+    addCookies: jest.fn(),
+    newPage: jest.fn().mockResolvedValue(mockPage),
+  };
+  const mockBrowser = {
+    newContext: jest.fn().mockResolvedValue(mockContext),
+    close: jest.fn(),
+  };
+  return {
+    chromium: {
+      launch: jest.fn().mockResolvedValue(mockBrowser),
+    },
+    __mockBrowser: mockBrowser,
+    __mockContext: mockContext,
+    __mockPage: mockPage,
+  };
+});
+
 // Minimal data.js content that matches the parser's expected format
 const MOCK_CHEAT_SHEET_HTML = `var data = [{"Type":"1","Name":"Vincent van Gogh","Born":"1853","Death":"1890","Prompt":"style of Vincent van Gogh","NPrompt":"","Category":"Painting, Oil, Post-Impressionism, Netherlands, 19th Century","Checkpoint":"Deliberate 2.0","Extrainfo":"","Image":"Vincent-van-Gogh.webp","Creation":"202304061553"},{"Type":"1","Name":"Frida Kahlo","Born":"1907","Death":"1954","Prompt":"style of Frida Kahlo","NPrompt":"","Category":"Painting, Oil, Folk Art, Surrealism, Mexico","Checkpoint":"Deliberate 2.0","Extrainfo":"","Image":"Frida-Kahlo.webp","Creation":"202304062000"},{"Type":"1","Name":"H.R. Giger","Born":"1940","Death":"2014","Prompt":"style of H.R. Giger","NPrompt":"","Category":"Surrealism, Sci-Fi, Horror, Switzerland","Checkpoint":"Deliberate 2.0","Extrainfo":"","Image":"HR-Giger.webp","Creation":"202304062100"},{"Type":"1","Name":"Greg Rutkowski","Born":"1985","Death":"","Prompt":"style of Greg Rutkowski","NPrompt":"","Category":"Illustration, Fantasy, Poland","Checkpoint":"Deliberate 2.0","Extrainfo":"","Image":"Greg-Rutkowski.webp","Creation":"202304062200"}];`;
 
@@ -185,21 +208,29 @@ describe('NightCafeScraper (tasks 7.2, 7.3)', () => {
   });
 
   describe('scrapeChallenges() network integration', () => {
-    test('returns parsed entries from mocked HTTP response', async () => {
-      (axios as jest.Mocked<typeof axios>).get = jest.fn().mockResolvedValue({ data: MOCK_NEXT_DATA_HTML });
+    let mockPage: any;
+
+    beforeEach(() => {
+      const pw = jest.requireMock('playwright');
+      mockPage = pw.__mockPage;
+      mockPage.goto.mockReset();
+      mockPage.content.mockReset();
+    });
+
+    test('returns parsed entries from mocked browser response', async () => {
+      mockPage.goto.mockResolvedValue({ status: () => 200 });
+      mockPage.content.mockResolvedValue(MOCK_NEXT_DATA_HTML);
       const entries = await scraper.scrapeChallenges();
       expect(entries.length).toBe(3);
     });
 
     test('throws descriptive error on 403', async () => {
-      const err: any = new Error('403');
-      err.response = { status: 403 };
-      (axios as jest.Mocked<typeof axios>).get = jest.fn().mockRejectedValue(err);
+      mockPage.goto.mockResolvedValue({ status: () => 403 });
       await expect(scraper.scrapeChallenges()).rejects.toThrow('403 Forbidden');
     });
 
     test('throws on generic network error', async () => {
-      (axios as jest.Mocked<typeof axios>).get = jest.fn().mockRejectedValue(new Error('timeout'));
+      mockPage.goto.mockRejectedValue(new Error('timeout'));
       await expect(scraper.scrapeChallenges()).rejects.toThrow('Failed to fetch NightCafe challenges');
     });
   });
