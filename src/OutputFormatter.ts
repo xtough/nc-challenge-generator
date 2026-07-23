@@ -3,65 +3,59 @@ import { Challenge } from './types';
 export abstract class OutputFormatter {
   abstract format(challenge: Challenge): string;
 
-  protected formatCategoryItems(items: string[]): string {
-    return items.join('\n');
+  protected buildFlatBulletList(challenge: Challenge): string {
+    const categoryOrder = ['subject', 'setting', 'medium', 'style', 'mood', 'artist'];
+    const lines: string[] = [];
+
+    lines.push(`- ${challenge.mandatoryKeyword} (required)`);
+    for (const key of categoryOrder) {
+      const items = challenge.categories[key];
+      if (items && items.length > 0) {
+        lines.push(`- ${items.join(', ')}`);
+      }
+    }
+
+    const example = [challenge.mandatoryKeyword];
+    for (const key of categoryOrder) {
+      const items = challenge.categories[key];
+      if (items && items.length > 0) example.push(items[0]);
+    }
+
+    return lines.join('\n') + '\n\n' + `Example: ${example.join(', ')}`;
   }
 }
 
 export class PrettyPrintFormatter extends OutputFormatter {
   format(challenge: Challenge): string {
-    let output = '\n';
-    output += '═'.repeat(60) + '\n';
-    output += `🏗️  BUILD A PROMPT 🏗️  ${challenge.theme} ${challenge.emoji}\n`;
-    output += '═'.repeat(60) + '\n\n';
+    const header = [
+      `🏗️  BUILD A PROMPT — ${challenge.theme.toUpperCase()} ${challenge.emoji}`,
+      '',
+      'For your prompt, choose 1 item from each list below. You MAY then add ONLY 3 additional words, PLUS 1 additional artist of your choice. You MAY also use any negative prompt.',
+      '• PLEASE USE YOUR PROMPT AS YOUR ENTRY TITLE OR RISK BEING DOWNVOTED •',
+      '• PLEASE VOTE FAIRLY •',
+      '✅ Change word order, adjust weights, any negative prompt, evolve/inpaint',
+      '❌ Presets, Uploads, NSFW, LoRAs, Creative/Clarity Upscaler, Pro models, Prompt Magic',
+      '',
+    ].join('\n');
 
-    output += `📌 Mandatory Keyword: ${challenge.mandatoryKeyword}\n\n`;
-
-    output += '✨ Pick 1 item from each category below:\n\n';
-
-    for (const [categoryName, items] of Object.entries(challenge.categories)) {
-      output += `📍 ${categoryName.toUpperCase()}:\n`;
-      items.forEach((item, index) => {
-        output += `   ${index + 1}. ${item}\n`;
-      });
-      output += '\n';
-    }
-
-    output += '═'.repeat(60) + '\n\n';
-
-    return output;
+    return '\n' + header + this.buildFlatBulletList(challenge) + '\n';
   }
 }
 
 export class MarkdownFormatter extends OutputFormatter {
   format(challenge: Challenge): string {
-    let output = `# 🏗️ BUILD A PROMPT 🏗️ ${challenge.theme} ${challenge.emoji}\n\n`;
+    const header = [
+      `# 🏗️ BUILD A PROMPT — ${challenge.theme.toUpperCase()} ${challenge.emoji}`,
+      '',
+      'For your prompt, choose 1 item from each list below. You MAY then add ONLY 3 additional words, PLUS 1 additional artist of your choice. You MAY also use any negative prompt.',
+      '• PLEASE USE YOUR PROMPT AS YOUR ENTRY TITLE OR RISK BEING DOWNVOTED •',
+      '• PLEASE VOTE FAIRLY •',
+      '✅ Change word order, adjust weights, any negative prompt, evolve/inpaint',
+      '❌ Presets, Uploads, NSFW, LoRAs, Creative/Clarity Upscaler, Pro models, Prompt Magic',
+      '',
+    ].join('\n');
 
-    output += `**Mandatory Keyword:** ${challenge.mandatoryKeyword}\n\n`;
-
-    output += '## Instructions\n';
-    output += 'Pick **1 item** from each category below to build your prompt.\n\n';
-
-    // Define category order for NightCafe format
-    const categoryOrder = ['subject', 'setting', 'mood', 'artist', 'medium', 'style'];
-    
-    for (const categoryName of categoryOrder) {
-      const items = challenge.categories[categoryName];
-      if (!items) continue;
-
-      // Format category name in uppercase for NightCafe style
-      const displayName = categoryName === 'artist' ? 'ARTIST' : categoryName.toUpperCase();
-      output += `### ${displayName}\n`;
-      items.forEach((item, index) => {
-        output += `${index + 1}. ${item}\n`;
-      });
-      output += '\n';
-    }
-
-    output += '---\n';
-    output += `*Generated on ${new Date(challenge.generatedAt).toLocaleString()}*\n`;
-
-    return output;
+    return header + this.buildFlatBulletList(challenge) + '\n';
   }
 }
 

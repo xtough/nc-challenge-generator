@@ -43,10 +43,9 @@ export class ChallengeGenerator {
     const categories: Record<string, string[]> = {};
 
     for (const [categoryName, categoryItems] of Object.entries(theme.categories)) {
-      // Artist category always has exactly 1 item, never overrideable
       if (categoryName === 'artist') {
-        const artist = this.selectArtistForTheme(theme);
-        categories[categoryName] = [artist.name];
+        const count = categoryOverrides[categoryName] !== undefined ? categoryOverrides[categoryName] : itemsPerCategory;
+        categories[categoryName] = this.selectArtistsForTheme(theme, count).map(a => a.name);
       } else {
         const count = categoryOverrides[categoryName] !== undefined ? categoryOverrides[categoryName] : itemsPerCategory;
         categories[categoryName] = this.selectRandomItems(categoryItems, count);
@@ -55,8 +54,7 @@ export class ChallengeGenerator {
 
     // If theme doesn't have artist category yet (backward compat), add it
     if (!categories['artist']) {
-      const artist = this.selectArtistForTheme(theme);
-      categories['artist'] = [artist.name];
+      categories['artist'] = this.selectArtistsForTheme(theme, itemsPerCategory).map(a => a.name);
     }
 
     // Generate unique ID and signature
@@ -108,25 +106,21 @@ export class ChallengeGenerator {
   /**
    * Select an artist for a theme, filtered by theme-compatible styles
    */
-  private selectArtistForTheme(theme: Theme): Artist {
+  private selectArtistsForTheme(theme: Theme, count: number): Artist[] {
     const themeStyles = theme.categories['style'] || [];
     const themeStyleSet = new Set(themeStyles.map(s => s.toLowerCase()));
 
-    // Filter artists whose themes intersect with theme styles
     const compatibleArtists = this.artistsData.artists.filter(artist => {
       const artistThemes = (artist.themes || []).map(t => t.toLowerCase());
       const artistEra = (artist.era || '').toLowerCase();
-
-      // Check if artist's era or themes match any theme style
-      return themeStyleSet.has(artistEra) || 
+      return themeStyleSet.has(artistEra) ||
              artistThemes.some(t => themeStyleSet.has(t)) ||
              themeStyleSet.has(artist.name.toLowerCase());
     });
 
-    // Fallback to random artist if no theme-compatible artists found
     const selectedPool = compatibleArtists.length > 0 ? compatibleArtists : this.artistsData.artists;
-    const randomIndex = Math.floor(Math.random() * selectedPool.length);
-    return selectedPool[randomIndex];
+    const poolNames = selectedPool.map(a => a.name);
+    return this.selectRandomItems(poolNames, count).map(name => selectedPool.find(a => a.name === name)!);
   }
 
   /**

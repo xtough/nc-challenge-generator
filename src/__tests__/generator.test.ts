@@ -100,7 +100,7 @@ describe('NightCafe Challenge Generator', () => {
     test('pretty-print formatter should include theme name', () => {
       const formatter = OutputFormatterFactory.create('pretty-print');
       const output = formatter.format(testChallenge);
-      expect(output).toContain('Vikings');
+      expect(output.toUpperCase()).toContain('VIKINGS');
       expect(output).toContain(testChallenge.mandatoryKeyword);
     });
 
@@ -109,7 +109,7 @@ describe('NightCafe Challenge Generator', () => {
       const output = formatter.format(testChallenge);
       expect(output).toContain('# 🏗️');
       expect(output).toContain(testChallenge.mandatoryKeyword);
-      expect(output).toContain('### ');
+      expect(output).toContain('- ');
     });
 
     test('json formatter should produce valid JSON', () => {
@@ -262,12 +262,12 @@ describe('ChallengeGenerator - additional (task 4.5)', () => {
     expect(new Date(challenge.generatedAt).getTime()).toBeGreaterThan(0);
   });
 
-  test('artist category is always present with exactly 1 artist', () => {
-    // Test random challenge
+  test('artist category is always present with up to 5 artists', () => {
     const randomChallenge = generator.generateRandomChallenge();
     expect(randomChallenge.categories['artist']).toBeDefined();
     expect(Array.isArray(randomChallenge.categories['artist'])).toBe(true);
-    expect(randomChallenge.categories['artist'].length).toBe(1);
+    expect(randomChallenge.categories['artist'].length).toBeGreaterThan(0);
+    expect(randomChallenge.categories['artist'].length).toBeLessThanOrEqual(5);
     expect(typeof randomChallenge.categories['artist'][0]).toBe('string');
 
     // Test challenges for each theme
@@ -275,7 +275,8 @@ describe('ChallengeGenerator - additional (task 4.5)', () => {
     themes.forEach(themeName => {
       const challenge = generator.generateChallengeForTheme(themeName);
       expect(challenge.categories['artist']).toBeDefined();
-      expect(challenge.categories['artist'].length).toBe(1);
+      expect(challenge.categories['artist'].length).toBeGreaterThan(0);
+      expect(challenge.categories['artist'].length).toBeLessThanOrEqual(5);
     });
   });
 });
@@ -338,34 +339,31 @@ describe('OutputFormatters - full coverage (task 7.5)', () => {
     challenge = generator.generateChallengeForTheme('Cyberpunk');
   });
 
-  test('pretty-print includes all category names', () => {
+  test('pretty-print includes category items', () => {
     const output = OutputFormatterFactory.create('pretty-print').format(challenge);
-    expect(output).toContain('SUBJECT');
-    expect(output).toContain('SETTING');
-    expect(output).toContain('MOOD');
-    expect(output).toContain('MEDIUM');
-    expect(output).toContain('STYLE');
+    expect(output).toContain('- ');
+    expect(output).toContain('(required)');
+    expect(output).toContain('Example:');
   });
 
-  test('pretty-print includes numbered items', () => {
+  test('pretty-print uses flat bullet list format', () => {
     const output = OutputFormatterFactory.create('pretty-print').format(challenge);
-    expect(output).toMatch(/1\./);
-    expect(output).toMatch(/2\./);
+    expect(output).toContain('- ');
+    expect(output).toContain('(required)');
+    expect(output).toContain('Example:');
   });
 
-  test('markdown includes all categories as headings', () => {
+  test('markdown includes all categories as flat bullet lines', () => {
     const output = OutputFormatterFactory.create('markdown').format(challenge);
-    expect(output).toContain('### SUBJECT');
-    expect(output).toContain('### SETTING');
-    expect(output).toContain('### MOOD');
-    expect(output).toContain('### ARTIST');
-    expect(output).toContain('### MEDIUM');
-    expect(output).toContain('### STYLE');
+    expect(output).toContain('- ');
+    expect(output).toContain('(required)');
+    expect(output).not.toContain('### SUBJECT');
+    expect(output).not.toContain('### ARTIST');
   });
 
-  test('markdown items are formatted as numbered list items', () => {
+  test('markdown items are formatted as bullet list items', () => {
     const output = OutputFormatterFactory.create('markdown').format(challenge);
-    expect(output).toMatch(/^\d+\. /m);
+    expect(output).toMatch(/^- /m);
   });
 
   test('json formatter includes all challenge fields', () => {
