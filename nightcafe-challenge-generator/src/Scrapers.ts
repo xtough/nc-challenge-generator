@@ -132,9 +132,11 @@ export class NightCafeScraper {
   private readonly challengesUrl =
     'https://creator.nightcafe.studio/search/challenges?sort=challenges%2Fsort%2FstartsAtMs%3Adesc&stillJoinable=false&status=finished&chatRoomName=C3xF%27s+Build+a+Prompt+Challenge%2CBuild+a+Prompt+Challenge%2CC3xF%27s%2C+%22Portraits+Build+a+Prompt%22+Challenge+';
 
+  private readonly typesenseHost = '06dxqa9tiyshlok1p.a1.typesense.net';
+
   /**
    * Fetch finished Build-a-Prompt challenges from NightCafe using a headless Chromium browser.
-   * Uses a real browser TLS fingerprint to bypass Cloudflare bot protection.
+   * Intercepts the Typesense multi_search API response which contains the challenge data.
    * Set NIGHTCAFE_COOKIE to your browser session cookie to authenticate.
    */
   async scrapeChallenges(): Promise<NightCafeHistoryEntry[]> {
@@ -167,9 +169,13 @@ export class NightCafeScraper {
       const page = await context.newPage();
       console.log('Fetching NightCafe challenge history...');
 
-      const response = await page.goto(this.challengesUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
+      const typesenseResponsePromise = page.waitForResponse(
+        (resp) => resp.url().includes(this.typesenseHost) && resp.url().includes('multi_search'),
+        { timeout: 30000 }
+      );
 
-      if (response?.status() === 403) {
+      const navResponse = await page.goto(this.challengesUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
+      if (navResponse?.status() === 403) {
         throw new Error(
           'NightCafe returned 403 Forbidden (Cloudflare bot protection).\n' +
             'Set the NIGHTCAFE_COOKIE environment variable to your browser session cookie:\n' +
@@ -178,8 +184,18 @@ export class NightCafeScraper {
         );
       }
 
-      const html = await page.content();
-      return this.parseChallengesFromNextData(html);
+      const typesenseResponse = await typesenseResponsePromise;
+      const data = await typesenseResponse.json();
+      const hits: any[] = data?.results?.[0]?.hits ?? [];
+
+      if (hits.length === 0) {
+        throw new Error('Could not locate challenge list in Typesense response. The API may have changed.');
+      }
+
+      const fetchedAt = new Date().toISOString();
+      return hits
+        .filter((h: any) => typeof h?.document?.title === 'string' && h.document.title.trim().length > 0)
+        .map((h: any) => ({ title: h.document.title.trim(), fetchedAt }));
     } catch (error: any) {
       if (error.message.includes('403 Forbidden')) throw error;
       throw new Error(`Failed to fetch NightCafe challenges: ${error}`);

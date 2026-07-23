@@ -13,9 +13,12 @@ import axios from 'axios';
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 jest.mock('playwright', () => {
+  const mockTypesenseResponse = {
+    json: jest.fn(),
+  };
   const mockPage = {
     goto: jest.fn(),
-    content: jest.fn(),
+    waitForResponse: jest.fn().mockResolvedValue(mockTypesenseResponse),
   };
   const mockContext = {
     addCookies: jest.fn(),
@@ -33,6 +36,7 @@ jest.mock('playwright', () => {
     __mockBrowser: mockBrowser,
     __mockContext: mockContext,
     __mockPage: mockPage,
+    __mockTypesenseResponse: mockTypesenseResponse,
   };
 });
 
@@ -210,17 +214,27 @@ describe('NightCafeScraper (tasks 7.2, 7.3)', () => {
 
   describe('scrapeChallenges() network integration', () => {
     let mockPage: any;
+    let mockTypesenseResponse: any;
 
     beforeEach(() => {
       const pw = jest.requireMock('playwright');
       mockPage = pw.__mockPage;
+      mockTypesenseResponse = pw.__mockTypesenseResponse;
       mockPage.goto.mockReset();
-      mockPage.content.mockReset();
+      mockPage.waitForResponse.mockReset();
+      mockTypesenseResponse.json.mockReset();
+      mockPage.waitForResponse.mockResolvedValue(mockTypesenseResponse);
     });
 
-    test('returns parsed entries from mocked browser response', async () => {
+    test('returns parsed entries from mocked Typesense response', async () => {
       mockPage.goto.mockResolvedValue({ status: () => 200 });
-      mockPage.content.mockResolvedValue(MOCK_NEXT_DATA_HTML);
+      mockTypesenseResponse.json.mockResolvedValue({
+        results: [{ hits: [
+          { document: { title: 'Build a Prompt - Horror', startsAtMs: 1700000000000 } },
+          { document: { title: 'Build a Prompt - Fantasy', startsAtMs: 1701000000000 } },
+          { document: { title: 'Build a Prompt - Sci-Fi', startsAtMs: 1702000000000 } },
+        ]}],
+      });
       const entries = await scraper.scrapeChallenges();
       expect(entries.length).toBe(3);
     });
